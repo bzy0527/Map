@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<screenpart BackgroundColor="Transparent" HorizonScrollbar="Hidden" Margin="0px" Padding="0px" Serializer="DBFX.Serializer.FormPartSerializer">
+
+  <xns>
+    <ns k="wc"  n="DBFX.Web.Controls" />
+    <ns k="lc"  n="DBFX.Web.LayoutControls" />
+    <ns k="dv"  n="DBFX.Design" />
+  </xns>
+
+  <controls>
+
+    <c T="dv:TypeEditors.EventList" Name="EventListBox" Text="事件处理程序" Shadow="node" Margin="2px 0px 2px 0px" MinWidth="64px">
+    </c>
+  </controls>
+</screenpart>

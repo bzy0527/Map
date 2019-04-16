@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Map</title>
+
+    <link rel="stylesheet" href="Map.css">
+    <style>
+       html,body{
+            width: 100%;
+            height: 100%;
+        }
+
+
+    </style>
+    <!--加载高德地图-->
+    <!--<script src="https://webapi.amap.com/maps?v=1.4.11&key=501c9ef49f34ed644919c827c3d98b98"></script>-->
+
+    <!--加载百度地图-->
+    <!--<script type="text/javascript" src="http://api.map.baidu.com/getscript?type=quick&file=api&ak=oXec3eMiIws1586v9MuGfr7GuTTVtmPB"></script>-->
+    <!--<script type="text/javascript" src="http://api.map.baidu.com/getscript?type=quick&file=feature&ak=oXec3eMiIws1586v9MuGfr7GuTTVtmPB"></script>-->
+    <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=oXec3eMiIws1586v9MuGfr7GuTTVtmPB"></script>-->
+
+    <script src="dbfx.js"></script>
+    <script src="https://lc.dbazure.cn/dbfx/dbfx.data.js"></script>
+    <script src="https://lc.dbazure.cn/dbfx/dbfx.commodel.js"></script>
+    <script src="https://lc.dbazure.cn/dbfx/dbfx.serializer.js"></script>
+    <script src="https://lc.dbazure.cn/dbfx/dbfx.net.js"></script>
+    <script src="https://lc.dbazure.cn/dbfx/dbfx.resources.js"></script>
+
+    <script src="https://lc.dbazure.cn/dbfx/dbfx.commodel.js"></script>
+    <script src="https://lc.dbazure.cn/dbfx/dbfx.serializer.js"></script>
+    <script src="https://lc.dbazure.cn/dbfxui/dbfx.web.controls.js"></script>
+    <script src="https://lc.dbazure.cn/dbfxui/dbfx.web.layoutcontrols.js"></script>
+    <script src="https://lc.dbazure.cn/dbfxui/dbfx.web.navigation.js"></script>
+    <!--<script src="https://lc.dbazure.cn/dbfx/dbfx.app.js"></script>-->
+
+
+    <!--<script src="https://api.map.baidu.com/api?v=2.0&ak=oXec3eMiIws1586v9MuGfr7GuTTVtmPB" type="text/javascript"></script>-->
+
+    <script src="Map.js"></script>
+
+</head>
+<body>
+<div id="div" style="height:80%;width: 100%;border: 1px solid #ffaa30"></div>
+<div id="btn" style="height:40px;width: 100px;border: 1px solid #ffaa30"></div>
+
+<script>
+    var divE = document.getElementById("div");
+    var map1 = new DBFX.Web.Controls.Map();
+    divE.appendChild(map1.VisualElement);
+    map1.Width = "400px";
+    map1.Height = "500px";
+
+
+    var pos1 = {lng:125.292078,lat:43.828768,title:"biaoqian1",label:"吉林省长春市"};
+    var pos2 = {lng:125.293237,lat:43.829929};
+    var pos3 = {lng:125.297002,lat:43.836182};
+    var pos4 = {lng:125.319533,lat:43.858404};
+    var pos5 = {lng:125.319233,lat:43.87638};
+
+    var arr = new Array();
+    arr.push(pos1,pos2,pos3,pos4,pos5);
+    // map1.DrawTruckRoute(arr);
+
+    var btn = document.getElementById("btn");
+    btn.onclick = function (ev) {
+        // map1.DrawTruckRoute(arr);
+        map1.LoadMarkers(arr);
+    }
+
+    // var map2 = new DBFX.Web.Controls.Map();
+    // divE.appendChild(map2.VisualElement);
+    // map.OnLoad();
+    // map.LoadMap();
+
+
+    Msg = {
+        m:0,            //消息模式  0--不需要显示到设备的本地消息 1—需要显示到设备的本地消息
+        f:0,            //提醒方式 0—无声音、无震动、无闪光 1—声音 2—震动 3—闪光灯 4—声音震动 5—声音、震动、闪光
+        title:"消息标题",  //消息标题 消息模式m=1时是必填项目，否则可以不设置此属性
+        body:"消息内容",  //消息内容 消息模式m=1时必填，否则可以不设置此属性
+        badge:0,        //消息标识 用于显示在应用图标右上角的标记数量
+        appid:"",       //应用标识d 向某一应用程序推送消息
+        msgid:"",       //消息类型编号 客户端可监听某一类型的消息并处理
+        ud:{}           //此属性为用户自定义的其它数据，开发者可根据需要定义一些内容
+    }
+
+    var a = [1,2,1,3,4,1,2,4,2,4,1,5,7,6];
+    var r = a.filter(function (e,i,self) {
+        return self.indexOf(e)===i;
+    });
+
+    // var arr = [];
+    // arr.push(23,45);
+    // console.log(arr);
+
+</script>
+
+</body>
+</html>

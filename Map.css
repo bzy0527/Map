@@ -1,0 +1,102 @@
+
+.Map {
+    /*display: block;*/
+    border: 1px solid gray;
+    /*box-shadow: rgba(64,64,64,0.20) 0px 0px 1px 1px;*/
+    width: 200px;
+    height: 400px;
+}
+
+.MapView {
+    /*display:block;*/
+    width: 100%;
+    height: 100%;
+}
+
+.MapInfoPanel {
+    display: none;
+    position: absolute;
+    width: 200px;
+    height: 400px;
+    left: 100px;
+    top: 30px;
+    /*background-color: #ffaa30;*/
+    /*z-index: 20;*/
+    overflow:auto;
+
+}
+
+/*设置标记Label*/
+.amap-marker-label{
+    border: 1px solid rgba(61, 87, 255, 0.18);
+    background-color: rgba(176, 196, 222, 0.27);
+}
+
+.amap-marker-label .MapUserMarkerLabel{
+
+}
+
+.MapTool{
+    position: absolute;
+    width: 50%;
+    height: 40px;
+    background-color: rgba(66, 68, 240, 0.4);
+    top: 30px;
+    left: 50%;
+    transform: translate(-50%,0);
+
+    box-sizing: border-box;
+    display: flex; /* IE10 */
+    display: flexbox; /* IE10 */
+    display: -moz-box; /* Firefox */
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.MapSearchInput{
+    display: inline-block;
+    height: 60%;
+    width: 35%;
+    border: none;
+    outline: none;
+    font-size: 12px;
+    color: black;
+    /*border-radius: 5px;*/
+}
+
+.MapMarkBtn{
+    /*width: 10%;*/
+    display: inline-block;
+    height: 24px;
+    color: green;
+    font-size: 12px;
+    background-color: rgba(255, 255, 255, 0.76);
+    text-align: center;
+    cursor: pointer;
+    line-height: 24px;
+    padding: 2px;
+    border-radius: 5px;
+    border: 1px solid #818485;
+
+}
+
+.MapRouteSelect{
+    display: inline-block;
+    width: 25%;
+    height: 70%;
+    color: #3d57ff;
+    outline: none;
+    border-color: #3d57ff;
+
+}
+
+.MapRouteSelectDisabled{
+    display: inline-block;
+    width: 25%;
+    height: 70%;
+    color: #858889;
+    outline: none;
+    border-color: #858889;
+}

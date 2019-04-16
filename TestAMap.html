@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        html{height:100%}
+        body{height:100%;margin:0px;padding:0px}
+        #container{height:100%}
+    </style>
+    <script src="https://webapi.amap.com/maps?v=1.4.11&key=501c9ef49f34ed644919c827c3d98b98"></script>
+</head>
+<body>
+<div id="container"></div>
+</body>
+
+<script>
+    var map = new AMap.Map('container', {
+        center:[117.000923,36.675807],
+        zoom:11,
+        viewMode:'3D'
+    });
+</script>
+
+</html>
