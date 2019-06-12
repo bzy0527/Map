@@ -9,7 +9,7 @@
         #container{height:50%;width: 50%}
     </style>
 
-    <script src="https://api.map.baidu.com/api?v=2.0&ak=oXec3eMiIws1586v9MuGfr7GuTTVtmPB" type="text/javascript"></script>
+    <!--<script src="https://api.map.baidu.com/api?v=3.0&ak=VgbiGmjecFzgiIZjPxhSwXlXhWof4WaG" type="text/javascript"></script>-->
 
 </head>
 <body>
@@ -17,10 +17,35 @@
 </body>
 
 <script>
-    var map = new BMap.Map("container");          // 创建地图实例
-    var point = new BMap.Point(116.404, 39.915);  // 创建点坐标
-    map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别
-    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    // var map = new BMap.Map("container");          // 创建地图实例
+    // var point = new BMap.Point(116.404, 39.915);  // 创建点坐标
+    // map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别
+    // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+    // Object.prototype.OnPropertyChanged = function (propertyname, value) {
+    //
+    //     if (Object.prototype.PropertyChanged != undefined)
+    //         Object.prototype.PropertyChanged(propertyname, value, this);
+    //
+    // }
+
+
+
+    function initialize() {
+        var mp = new BMap.Map('container');
+        mp.centerAndZoom(new BMap.Point(121.491, 31.233), 11);
+    }
+
+    function loadScript() {
+        var script = document.createElement("script");
+        script.src = "https://api.map.baidu.com/api?v=3.0&ak=VgbiGmjecFzgiIZjPxhSwXlXhWof4WaG&callback=initialize";
+        document.body.appendChild(script);
+    }
+
+    loadScript();
+
+    console.log(new Date(""));
+
 </script>
 
 </html>

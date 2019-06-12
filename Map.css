@@ -36,6 +36,17 @@
 
 }
 
+.Map .MapPOIList{
+    position: fixed;
+    background-color: white;
+    max-height: 70%;
+    overflow-y: auto;
+    top: 10px;
+    right: 10px;
+    width: 280px;
+    border-bottom: solid 1px silver;
+}
+
 .MapTool{
     position: absolute;
     width: 50%;

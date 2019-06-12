@@ -12,19 +12,20 @@ DBFX.Web.Controls.Map = function () {
     var map = new DBFX.Web.Controls.Control("Map");
     map.ClassDescriptor.Designers.splice(1, 0, "DBFX.Design.ControlDesigners.MapDesigner");
     map.ClassDescriptor.Serializer = "DBFX.Serializer.MapSerializer";
-    map.VisualElement = document.createElement("DIV");
+    map.VisualElement = document.createElement("div");
     map.VisualElement.className = "Map";
 
     //标记位置
     //{P: 43.850344, R: 125.20754, lng: 125.20754, lat: 43.850344}
     map.MarkPosition = undefined;
+
     //城市信息{province: "吉林省", city: "长春市", citycode: "0431", district: "朝阳区"}
     map.City = undefined;
 
     //自定义的点标记数组
     map.CustomMarkers = [];
 
-    //FIXME:百度地图  暂未实现动态加载
+    //FIXME:百度地图  暂未实现动态加载  
     map.bMap = new Object();
 
     //高德地图
@@ -40,11 +41,15 @@ DBFX.Web.Controls.Map = function () {
 
     map.OnCreateHandle();
     map.OnCreateHandle = function () {
-        map.VisualElement.innerHTML = "<DIV class=\"MapView\" id='MapView'/></DIV><DIV class='MapInfoPanel' id='MapInfoPanel'></DIV>"+
-        "<DIV class='MapTool'><input type='text' id='MapSearchInput' class='MapSearchInput'><span class='MapMarkBtn'>标记位置</span><select name='路线选择' class='MapRouteSelect'><option value =\"5\">路线选择</option></select></DIV>";
-        map.MapDiv = map.VisualElement.querySelector("DIV.MapView");
-        map.MapInfoPanel = map.VisualElement.querySelector("DIV.MapInfoPanel");
+        map.VisualElement.innerHTML = "<div class=\"MapView\" id='MapView'/></div><div class='MapInfoPanel' id='MapInfoPanel'><div id='map123'></div></div>"+
+            "<div class='MapPOIList'></div>"+
+        "<div class='MapTool'><input type='text' id='MapSearchInput' class='MapSearchInput'><span class='MapMarkBtn'>标记位置</span><select name='路线选择' class='MapRouteSelect'><option value =\"5\">路线选择</option></select></div>";
+        map.MapDiv = map.VisualElement.querySelector("div.MapView");
+        map.MapInfoPanel = map.VisualElement.querySelector("div.MapInfoPanel");
         map.MapSearchInput = map.VisualElement.querySelector("input.MapSearchInput");
+
+        map.MapPOIList = map.VisualElement.querySelector("div.MapPOIList");
+
 
         map.MapSearchInput.placeholder = "搜索地址";
 
@@ -66,18 +71,33 @@ DBFX.Web.Controls.Map = function () {
         //选择路线事件
         map.RouteSelect.addEventListener("change",map.OnRouteSelect);
 
+        /************************** 集成高德地图 *****************************/
         var random = parseInt(Math.random()*100,10);
-
         map.CbName="MapCallback"+random;
-
         window[map.CbName] = map.LoadMap;
         map.MapDiv.id="MapView"+random;
-        //TODO:动态插入script  异步加载地图 callback=map.LoadMap!!
+        //TODO:动态插入script  异步加载高德地图 callback=map.LoadMap!!
         var mapJS = document.createElement("SCRIPT");
         mapJS.charset = "utf-8";
         mapJS.src = "https://webapi.amap.com/maps?v=1.4.11&key=501c9ef49f34ed644919c827c3d98b98&callback="+map.CbName;
         mapJS.type = 'text/javascript';
         document.body.appendChild(mapJS);
+
+        /************************** TODO:集成百度地图  *****************************/
+        //平台为Object扩展了很多属性 百度地图的代码运行报错
+
+        // var random = parseInt(Math.random()*100,10);
+        // map.CbName="MapCallback"+random;
+        // window[map.CbName] = map.BLoadMap;
+        // map.MapDiv.id="MapView"+random;
+        // //TODO:动态插入script  异步加载百度地图 callback=map.LoadMap!!   密钥：VgbiGmjecFzgiIZjPxhSwXlXhWof4WaG
+        // var mapJS = document.createElement("SCRIPT");
+        // console.log(typeof mapJS);
+        // mapJS.charset = "utf-8";
+        // mapJS.src = "http://api.map.baidu.com/api?v=3.0&ak=VgbiGmjecFzgiIZjPxhSwXlXhWof4WaG&callback="+map.CbName;
+        // mapJS.type = 'text/javascript';
+        // document.body.appendChild(mapJS);
+        // map.MapJS = mapJS;
 
         // document.head.insertAdjacentHTML("afterbegin", "<head></head>");
         // console.log(navigator.geolocation);
@@ -91,6 +111,89 @@ DBFX.Web.Controls.Map = function () {
             console.log("用户不允许获取当前位置信息");
         }
     }
+
+    //FIXME:加载百度地图  平台不能使用！
+    map.BLoadMap = function () {
+        delete window[map.CbName];
+        delete Object.prototype.OnPropertyChanged;
+        delete Object.prototype.propertyChanged;
+
+        // map.MapJS = undefined;
+        map.MapJS.PropertyChanged = null;
+        var mp = new BMap.Map("map123");
+        mp.centerAndZoom(new BMap.Point(121.491, 31.233), 11);
+    }
+
+    map.OnPOIListItemClick = function (SCE) {
+        console.log(SCE);
+        //SCE:点击兴趣点搜索结果列表中某一个地点时 返回该地点信息
+        map.POIItemInfo = SCE.data;
+        console.log(map.POIItemInfo);
+
+
+        if(map.POIListItemClick != undefined && map.POIListItemClick.GetType() == "Command"){
+            map.POIListItemClick.Sender = map;
+            map.POIListItemClick.Execute();
+        }
+
+        if(map.POIListItemClick != undefined && map.POIListItemClick.GetType() == "function"){
+            map.POIListItemClick(map,e,SCE);
+        }
+    }
+
+    //TODO:周边搜索 20190604
+    //config:配置信息对象
+    /**
+    var config = {
+        //兴趣点类型 多个用|分隔
+        type:"餐饮|酒店|电影院",
+        //每页显示数据数
+        pageSize:5,
+        //默认显示页数
+        pageIndex:1,
+        city:"010",
+        autoFitView:true,
+        //LngLat
+        cpoint:[116.405467, 39.907761],
+        //取值范围0-50000
+        radius:200
+    }*/
+
+    map.PlaceSearchNearBy = function (config) {
+
+
+        if(!config){
+            return;
+        }
+
+        AMap.service(["AMap.PlaceSearch"], function() {
+
+            //构造地点查询类
+            var placeSearch = new AMap.PlaceSearch({
+                type: config.type || "", // 兴趣点类别
+                pageSize: config.pageSize || 5, // 单页显示结果条数
+                pageIndex: config.pageIndex || 1, // 页码
+                city: config.city || map.City.citycode, // 兴趣点城市  默认为地图当前定位城市
+                // citylimit: true,  //是否强制限制在设置的城市内搜索
+                map: map.aMap, // 展现结果的地图实例
+                panel: map.MapPOIList, // 结果列表将在此容器中进行展示。
+                autoFitView: true // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
+            });
+
+            var cpoint = config.cpoint; //中心点坐标
+            placeSearch.searchNearBy('', cpoint, config.radius||2000, function(status, result) {
+                    console.log("兴趣点搜索结果状态"+status);
+                    console.log(result);
+            });
+
+            //SCE:SelectChangeEvent对象
+            placeSearch.on("listElementClick",function (SCE) {
+                //SCE:点击兴趣点搜索结果列表中某一个地点时 返回该地点信息
+                map.OnPOIListItemClick(SCE);
+            });
+        });
+    }
+
 
     //路线选择、绘制
     map.OnRouteSelect = function (e) {
@@ -154,9 +257,9 @@ DBFX.Web.Controls.Map = function () {
         }
     }
 
-    //TODO:设置地图中心
-    map.setMapCenter = function (c) {
-        // map.aMap.setCenter();//设置地图中心点
+    //设置地图中心 p:点坐标 [116.405467, 39.907761]
+    map.setMapCenter = function (p) {
+        map.aMap.setCenter(p);//设置地图中心点
     }
 
     //TODO:设置zoom
@@ -251,7 +354,7 @@ DBFX.Web.Controls.Map = function () {
         map.MapMarkBtn.innerText = map.isMarking==true ? "结束标记":"标记位置";
     }
 
-    //地球点击结束
+    //地图点击结束
     map.OnMapMouseup = function (e) {
         console.log("点击结束");
 
@@ -284,6 +387,8 @@ DBFX.Web.Controls.Map = function () {
         map.aMap.getCity(function (result) {
 
             console.log("为Autocomplete设置城市代码");
+
+            map.City = result;
 
             map.autoComplete.setCity(result.citycode);
             map.transferRoute.setCity(result.citycode);
@@ -723,7 +828,8 @@ DBFX.Serializer.MapSerializer = function () {
 
         //序列化方法
         DBFX.Serializer.SerializeCommand("MarkedPosition", c.MarkedPosition, xe);
-        DBFX.Serializer.SerializeCommand("MarkerClick", c.MarkedPosition, xe);
+        DBFX.Serializer.SerializeCommand("MarkerClick", c.MarkerClick, xe);
+        DBFX.Serializer.SerializeCommand("POIListItemClick", c.POIListItemClick, xe);
 
     }
 
@@ -734,6 +840,7 @@ DBFX.Serializer.MapSerializer = function () {
         //对方法反序列化
         DBFX.Serializer.DeSerializeCommand("MarkedPosition", xe, c);
         DBFX.Serializer.DeSerializeCommand("MarkerClick", xe, c);
+        DBFX.Serializer.DeSerializeCommand("POIListItemClick", xe, c);
 
     }
 }
@@ -747,7 +854,8 @@ DBFX.Design.ControlDesigners.MapDesigner = function () {
             //设计器中绑定事件处理
             od.EventListBox = od.FormContext.Form.FormControls.EventListBox;
             od.EventListBox.ItemSource = [{EventName:"MarkedPosition",EventCode:undefined,Command:od.dataContext.MarkedPosition,Control:od.dataContext},
-                                            {EventName:"MarkerClick",EventCode:undefined,Command:od.dataContext.MarkerClick,Control:od.dataContext}];
+                                            {EventName:"MarkerClick",EventCode:undefined,Command:od.dataContext.MarkerClick,Control:od.dataContext},
+                                            {EventName:"POIListItemClick",EventCode:undefined,Command:od.dataContext.POIListItemClick,Control:od.dataContext}];
         }, obdc);
     }
 
@@ -756,7 +864,8 @@ DBFX.Design.ControlDesigners.MapDesigner = function () {
         obdc.DataBind(e);
         if(obdc.EventListBox != undefined){
             obdc.EventListBox.ItemSource = [{EventName:"MarkedPosition",EventCode:undefined,Command:obdc.dataContext.MarkedPosition,Control:obdc.dataContext},
-                                            {EventName:"MarkerClick",EventCode:undefined,Command:obdc.dataContext.MarkerClick,Control:obdc.dataContext}];
+                                            {EventName:"MarkerClick",EventCode:undefined,Command:obdc.dataContext.MarkerClick,Control:obdc.dataContext},
+                                            {EventName:"POIListItemClick",EventCode:undefined,Command:od.dataContext.POIListItemClick,Control:od.dataContext}];
         }
     }
 
