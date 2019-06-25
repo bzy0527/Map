@@ -15,6 +15,11 @@ DBFX.Web.Controls.Map = function () {
     map.VisualElement = document.createElement("div");
     map.VisualElement.className = "Map";
 
+    //地图显示要素
+    map.Features = [];
+
+    //TODO:map.DesignTime  是否是设计时
+
     //标记位置
     //{P: 43.850344, R: 125.20754, lng: 125.20754, lat: 43.850344}
     map.MarkPosition = undefined;
@@ -47,6 +52,9 @@ DBFX.Web.Controls.Map = function () {
         map.MapDiv = map.VisualElement.querySelector("div.MapView");
         map.MapInfoPanel = map.VisualElement.querySelector("div.MapInfoPanel");
         map.MapSearchInput = map.VisualElement.querySelector("input.MapSearchInput");
+
+        //定位搜索工具栏
+        map.MapTool = map.VisualElement.querySelector("div.MapTool");
 
         map.MapPOIList = map.VisualElement.querySelector("div.MapPOIList");
 
@@ -112,7 +120,385 @@ DBFX.Web.Controls.Map = function () {
         }
     }
 
-    //FIXME:加载百度地图  平台不能使用！
+    //TODO:地图类型： 普通交通地图、简易世界地图、简易中国地图、简易外国地图、简易省图
+    map.mapStyle = "default";
+    Object.defineProperty(map,"MapStyle",{
+        get:function () {
+            return map.mapStyle;
+        },
+        set:function (v) {
+            map.mapStyle = v;
+
+            //获取所有图层 然后移除
+            var layers = map.aMap.getLayers();
+            console.log(layers,"layers");
+            map.aMap.remove(layers);
+
+            // 获取已经添加的覆盖物 然后移除
+            var overlays = map.aMap.getAllOverlays();
+            console.log(overlays,"overlays");
+            map.aMap.remove(overlays);
+
+            switch (v){
+                case "DisCountry"://简易国家地图
+                    map.DrawDisCountry();
+                    break;
+                case "DisProvince":
+                    map.DrawDisProvince();
+                    break;
+                case "DisWorld":
+                    map.DrawDisWorld();
+                    break;
+                default:
+                    map.DrawDefaultMap();
+                    break;
+            }
+        }
+    });
+
+    //获取随机颜色值
+    map.GetColorByRandom = function(){
+        var rg = Math.random() * 155 + 50;
+        return 'rgb(' + rg + ',' + rg + ',255)';
+    }
+
+    //TODO:绘制默认的交通地图 当前定位地点为中心点
+    map.DrawDefaultMap = function () {
+
+    }
+
+    //TODO:1、绘制国家简易行政区图
+    map.DrawDisCountry = function (config) {
+        var zIndex = 12,
+            SOC = 'CHN',//默认为中国
+            depth = 2;
+        if(config){
+            zIndex = config.zIndex || zIndex;
+            SOC = config.SOC || SOC;
+            depth = config.depth || depth;
+        }
+
+        map.disCountry && map.disCountry.setMap(null);
+
+        map.disCountry = new AMap.DistrictLayer.Country({
+                zIndex:zIndex,
+                SOC:SOC,
+                depth:depth,
+                styles:{
+                    'nation-stroke':'#ff0000',
+                    'coastline-stroke':[0.85, 0.63, 0.94, 1],
+                    'province-stroke':'white',
+                    'city-stroke': 'rgba(255,255,255,0.5)',//中国特有字段
+                    'fill':function(props){
+                        // console.log(props);
+
+                        // return getColorByDGP(props.adcode_pro);//中国特有字段
+                        return map.GetColorByRandom();
+                    }
+                }
+        });
+        //TODO:设置当前行政区中心在地图中心
+        // map.aMap.setCity("北京");
+        // map.setMapZoom(3);
+        //添加图层
+        // map.aMap.add([map.disCountry]);
+        map.disCountry.setMap(map.aMap);
+    }
+
+    //切换国家简易行政区图
+    map.SwitchCountry = function (soc) {
+        map.disCountry && map.disCountry.setSOC(soc);
+    }
+
+    //TODO:2、绘制省份简易行政区图
+    map.DrawDisProvince = function (config) {
+        var zIndex = 12,
+            adcode = 130000,
+            depth = 2;
+
+        if(config){
+            zIndex = config.zIndex || zIndex;
+            adcode = config.adcode || adcode;
+            depth = config.depth || depth;
+        }
+
+        map.disProvince && map.disProvince.setMap(null);
+
+        map.disProvince = new AMap.DistrictLayer.Province({
+            zIndex: zIndex,
+            adcode: [adcode],
+            depth: depth,
+            styles: {
+                'fill': function (properties) {
+                    // properties为可用于做样式映射的字段，包含
+                    // NAME_CHN:中文名称
+                    // adcode_pro
+                    // adcode_cit
+                    // adcode
+                    // var adcode = properties.adcode;
+                    // return getColorByAdcode(adcode);
+                    return "#6786ff";
+                },
+                'province-stroke': 'cornflowerblue',
+                'city-stroke': 'white', // 中国地级市边界
+                'county-stroke': 'rgba(255,255,255,0.5)' // 中国区县边界
+            }
+        });
+        //添加图层
+        // map.aMap.add([map.disProvince]);
+        map.disProvince.setMap(map.aMap);
+        map.aMap.setCity(adcode+"");
+        // map.setMapZoom(2);
+    }
+
+    //TODO:3、绘制世界简易行政区图
+    map.DrawDisWorld = function (config) {
+        var zIndex = 12;
+        if(config){
+            zIndex = config.zIndex || zIndex;
+        }
+
+        map.disWorld && map.disWorld.setMap(null);
+
+        map.disWorld = new AMap.DistrictLayer.World({
+            zIndex:zIndex,
+            styles:{
+                // 颜色格式: #RRGGBB、rgba()、rgb()、[r,g,b,a]
+                'nation-stroke':function(props){
+                    //props:{type:Nation_Border_China/Nation_Border_Foreign}
+                    if(props.type=='Nation_Border_China'){
+                        return 'red'
+                    }else{
+                        return 'white'
+                    }
+                },
+                'coastline-stroke': [0.8, 0.63, 1, 1],
+                'fill':function(props){
+
+                    // return getColorBySOC(props.SOC);
+                    return "#6786ff";
+                }
+            }
+        });
+        //添加图层
+        map.disWorld.setMap(map.aMap);
+
+    }
+
+    //TODO:4、绘制外国简易行政区图
+
+    //TODO:图层显示设置
+    //是否显示工具栏
+    map.showToolBar = true;
+    Object.defineProperty(map,"ShowToolBar",{
+        get:function () {
+            return map.showToolBar;
+        },
+        set:function (v) {
+            map.showToolBar = v;
+            if(v == true || v == "true"){
+                map.MapTool.style.visibility = "";
+            }else {
+                map.MapTool.style.visibility = "hidden";
+            }
+        }
+    });
+
+    //是否显示logo
+    map.showLogo = true;
+    Object.defineProperty(map,"ShowLogo",{
+        get:function () {
+            return map.showLogo;
+        },
+        set:function (v) {
+            map.showLogo = v;
+            if(v == true || v == "true"){
+                map.HideLogo(false);
+            }else {
+                map.HideLogo(true);
+            }
+        }
+    });
+
+    //是否显示版权信息
+    map.showCR = true;
+    Object.defineProperty(map,"ShowCR",{
+        get:function () {
+            return map.showCR;
+        },
+        set:function (v) {
+            map.showCR = v;
+            if(v == true || v == "true"){
+                map.HideCR(false);
+            }else {
+                map.HideCR(true);
+            }
+        }
+    });
+
+    //隐藏logo
+    map.HideLogo = function (h) {
+        //隐藏logo
+        map.logoImg = map.VisualElement.querySelector("a.amap-logo");
+        if(map.logoImg){
+            map.logoImg.style.display = h?"none":"block";
+        }
+    }
+
+    //隐藏版权信息
+    map.HideCR = function (h) {
+        //隐藏版权信息
+        var copyInfo = map.VisualElement.querySelector("div.amap-copyright");
+        if(copyInfo){
+            copyInfo.style.bottom = h?"-300px":"1px";
+        }
+    }
+
+    ////显示要素，分别是：区域面、道路、建筑物、标注；
+    // map.aMap.setFeatures(['bg', 'road', 'building', 'point']);
+
+    //显示区域面
+    map.showBG = false;
+    Object.defineProperty(map,"ShowBG",{
+        get:function () {
+            return map.showBG;
+        },
+        set:function (v) {
+            map.showBG = v;
+
+            if(v == true || v == "true"){
+                map.Features.indexOf('bg')<0 ? map.Features.push('bg'):"";
+            }else {
+                map.Features.indexOf('bg')<0 ? "":delete map.Features[map.Features.indexOf('bg')];
+            }
+            map.aMap.setFeatures(map.Features);
+        }
+    });
+    //显示道路
+    map.showRoad = false;
+    Object.defineProperty(map,"ShowRoad",{
+        get:function () {
+            return map.showRoad;
+        },
+        set:function (v) {
+            map.showRoad = v;
+
+            if(v == true || v == "true"){
+                map.Features.indexOf('road')<0 ? map.Features.push('road'):"";
+            }else {
+                map.Features.indexOf('road')<0 ? "":delete map.Features[map.Features.indexOf('road')];
+            }
+            map.aMap.setFeatures(map.Features);
+        }
+    });
+
+    //显示建筑物
+    map.showBuilding = false;
+    Object.defineProperty(map,"ShowBuilding",{
+        get:function () {
+            return map.showBuilding;
+        },
+        set:function (v) {
+            map.showBuilding = v;
+
+            if(v == true || v == "true"){
+                map.Features.indexOf('building')<0 ? map.Features.push('building'):"";
+            }else {
+                map.Features.indexOf('building')<0 ? "":delete map.Features[map.Features.indexOf('building')];
+            }
+            map.aMap.setFeatures(map.Features);
+        }
+    });
+
+    //显示建标注
+    map.showPoint = false;
+    Object.defineProperty(map,"ShowPoint",{
+        get:function () {
+            return map.showPoint;
+        },
+        set:function (v) {
+            map.showPoint = v;
+
+            if(v == true || v == "true"){
+                map.Features.indexOf('point')<0 ? map.Features.push('point'):"";
+            }else {
+                map.Features.indexOf('point')<0 ? "": delete map.Features[map.Features.indexOf('point')];
+            }
+            map.aMap.setFeatures(map.Features);
+        }
+    });
+
+    //地图是否可通过鼠标拖拽平移，默认为true
+    map.dragEnable = true;
+    Object.defineProperty(map,"DragEnable",{
+        get:function () {
+            return map.dragEnable;
+        },
+        set:function (v) {
+            map.dragEnable = v;
+
+            if(v == true || v == "true"){
+                map.aMap.setStatus({dragEnable:true});
+            }else {
+                map.aMap.setStatus({dragEnable:false});
+            }
+        }
+    });
+
+    //地图是否可通过双击鼠标放大地图，默认为true
+    map.doubleClickZoom = true;
+    Object.defineProperty(map,"DoubleClickZoom",{
+        get:function () {
+            return map.doubleClickZoom;
+        },
+        set:function (v) {
+            map.doubleClickZoom = v;
+
+            if(v == true || v == "true"){
+                map.aMap.setStatus({doubleClickZoom:true});
+            }else {
+                map.aMap.setStatus({doubleClickZoom:false});
+            }
+        }
+    });
+
+    //地图是否可缩放，默认值为true
+    map.zoomEnable = true;
+    Object.defineProperty(map,"ZoomEnable",{
+        get:function () {
+            return map.zoomEnable;
+        },
+        set:function (v) {
+            map.zoomEnable = v;
+
+            if(v == true || v == "true"){
+                map.aMap.setStatus({zoomEnable:true});
+            }else {
+                map.aMap.setStatus({zoomEnable:false});
+            }
+        }
+    });
+
+
+    //TODO:设置zoom 缩放级别 PC：[3,18]; App:[3,19];
+    map.zoom = 5;
+    Object.defineProperty(map,"Zoom",{
+        get:function () {
+            return map.zoom;
+        },
+        set:function (v) {
+            var v1 = v*1;
+            map.zoom = !isNaN(v1) ? v1:5;
+            map.setMapZoom(map.zoom);
+        }
+    });
+
+    map.setMapZoom = function (z) {
+        map.aMap.setZoom(z);
+    }
+
+
+    //加载百度地图  平台不能使用!!!
     map.BLoadMap = function () {
         delete window[map.CbName];
         delete Object.prototype.OnPropertyChanged;
@@ -124,6 +510,8 @@ DBFX.Web.Controls.Map = function () {
         mp.centerAndZoom(new BMap.Point(121.491, 31.233), 11);
     }
 
+
+    //兴趣点结果展示列表 item点击事件
     map.OnPOIListItemClick = function (SCE) {
         console.log(SCE);
         //SCE:点击兴趣点搜索结果列表中某一个地点时 返回该地点信息
@@ -141,7 +529,8 @@ DBFX.Web.Controls.Map = function () {
         }
     }
 
-    //TODO:周边搜索 20190604
+
+    //TODO:周边搜索兴趣点 20190604
     //config:配置信息对象
     /**
     var config = {
@@ -158,7 +547,6 @@ DBFX.Web.Controls.Map = function () {
         //取值范围0-50000
         radius:200
     }*/
-
     map.PlaceSearchNearBy = function (config) {
 
 
@@ -191,6 +579,163 @@ DBFX.Web.Controls.Map = function () {
                 //SCE:点击兴趣点搜索结果列表中某一个地点时 返回该地点信息
                 map.OnPOIListItemClick(SCE);
             });
+        });
+    }
+
+
+    //TODO:绘制热力图 20190613
+    //1、绘制中国地图时 各个省份的颜色
+    //2、绘制省份地图时 各个城市的颜色
+    //3、颜色辅助方法
+    var configs = {
+
+    };
+    map.HeatMap = function () {
+
+        var colors = {};
+
+        var GDPSpeed = {
+            '520000':10,//贵州
+            '540000':10,//西藏
+            '530000':8.5,//云南
+            '500000':8.5,//重庆
+            '360000':8.5,//江西
+            '340000':8.0,//安徽
+            '510000':7.5,//四川
+            '350000':8.5,//福建
+            '430000':8.0,//湖南
+            '420000':7.5, //湖北
+            '410000':7.5,//河南
+            '330000':7.0,//浙江
+            '640000':7.5,//宁夏
+            '650000':7.0,//新疆
+            '440000':7.0,//广东
+            '370000':7.0,//山东
+            '450000':7.3,//广西
+            '630000':7.0,//青海
+            '320000':7.0,//江苏
+            '140000':6.5,//山西
+            '460000':7,// 海南
+            '310000':6.5,//上海
+            '110000':6.5, // 北京
+            '130000':6.5, // 河北
+            '230000':6, // 黑龙江
+            '220000':6,// 吉林
+            '210000':6.5, //辽宁
+            '150000':6.5,//内蒙古
+            '120000':5,// 天津
+            '620000':6,// 甘肃
+            '610000':8.5// 甘肃
+        }
+
+        var getColorByDGP = function(adcode){
+            if(!colors[adcode]){
+                var gdp = GDPSpeed[adcode];
+                if(!gdp){
+                    colors[adcode] = 'rgb(227,227,227)'
+                }else{
+                    var rg = 255-Math.floor((gdp-5)/5*255);
+                    colors[adcode] = 'rgb('+ rg +','+ rg +',255)';
+                }
+            }
+            return colors[adcode];
+        }
+
+
+
+
+        // map.aMap.setCenter([116.418261, 39.921984]);
+
+
+
+        //TODO:设置地图的交互控制 作为设计器属性
+        // map.aMap.setStatus({
+        //     showIndoorMap: false, // 是否在有矢量底图的时候自动展示室内地图，PC默认true,移动端默认false
+        //     resizeEnable: true, //是否监控地图容器尺寸变化，默认值为false
+        //     // dragEnable: false, // 地图是否可通过鼠标拖拽平移，默认为true
+        //     keyboardEnable: false, //地图是否可通过键盘控制，默认为true
+        //     // doubleClickZoom: false, // 地图是否可通过双击鼠标放大地图，默认为true
+        //     // zoomEnable: false, //地图是否可缩放，默认值为true
+        //     rotateEnable: false // 地图是否可旋转，3D视图默认为true，2D视图默认false
+        // });
+
+
+        //TODO:限制地图显示范围
+        // var bounds = map.aMap.getBounds();
+        // map.aMap.setLimitBounds(bounds);
+
+
+        //TODO:创建热力图
+        map.aMap.plugin(["AMap.Heatmap"], function () {
+            //初始化heatmap对象
+            map.heatmap = new AMap.Heatmap(map.aMap, {
+                radius: 25, //给定半径
+                opacity: [0, 0.8],
+                gradient:{
+                    0.5: 'blue',
+                    0.65: 'rgb(117,211,248)',
+                    0.7: 'rgb(0, 255, 0)',
+                    0.9: '#ffea00',
+                    1.0: 'red'
+                }
+            });
+
+            //设置数据集：该数据为北京部分“公园”数据
+            map.heatmap.setDataSet({
+                data: [{
+                    "lng": 116.191031,
+                    "lat": 39.988585,
+                    "count": 10
+                }, {
+                    "lng": 116.389275,
+                    "lat": 39.925818,
+                    "count": 11
+                }, {
+                    "lng": 116.287444,
+                    "lat": 39.810742,
+                    "count": 12
+                }, {
+                    "lng": 116.481707,
+                    "lat": 39.940089,
+                    "count": 13
+                }, {
+                    "lng": 116.410588,
+                    "lat": 39.880172,
+                    "count": 14
+                }, {
+                    "lng": 116.394816,
+                    "lat": 39.91181,
+                    "count": 15
+                }, {
+                    "lng": 116.416002,
+                    "lat": 39.952917,
+                    "count": 16
+                }, {
+                    "lng": 116.39671,
+                    "lat": 39.924903,
+                    "count": 17
+                }, {
+                    "lng": 116.180816,
+                    "lat": 39.957553,
+                    "count": 18
+                }, {
+                    "lng": 116.382035,
+                    "lat": 39.874114,
+                    "count": 19
+                }, {
+                    "lng": 116.316648,
+                    "lat": 39.914529,
+                    "count": 20
+                }, {
+                    "lng": 116.395803,
+                    "lat": 39.908556,
+                    "count": 21
+                }],
+                max: 20
+            });
+
+            map.heatmap.show();
+
         });
     }
 
@@ -262,42 +807,10 @@ DBFX.Web.Controls.Map = function () {
         map.aMap.setCenter(p);//设置地图中心点
     }
 
-    //TODO:设置zoom
-    map.setMapZoom = function (z) {
-
-        // map.aMap.setZoomAndCenter();
-    }
 
 
-    //创建高德地图
-    map.CreateAMap = function () {
-        //创建高德地图
-        map.aMap = new AMap.Map(map.MapDiv.id,{
-            zoom:16,//级别
-            // center: [125.3247893, 43.8868593],//中心点坐标
-            // viewMode:'2D'//使用3D视图
-            resizeEnable: true
-            // features: ['bg', 'road', 'building', 'point']
-        });
-
-        ////显示要素，分别是：区域面、道路、建筑物、标注；
-        map.aMap.setFeatures(['bg', 'road', 'building', 'point']);
 
 
-        //地图事件绑定
-        //地图加载完成
-        map.aMap.on("complete", map.OnMapComplete);
-
-        //地图点击
-        // map.aMap.on("click",map.OnMapClick);
-    //     map.aMap.on("mouseup",function () {
-    //         console.log("鼠标抬起")
-    //     });
-    //
-    //     map.aMap.on("touchend",function () {
-    //         console.log("触摸结束")
-    //     });
-    }
 
     //是否允许用户标记自己位置 获取位置信息 默认允许"yes",不允许为"no";
     map.allowMarkPos = "yes";
@@ -446,8 +959,45 @@ DBFX.Web.Controls.Map = function () {
             map.userMarker.on("click",map.OnMarkerClick);
         }
 
+        //TODO：添加地图加载完成事件
+        if (map.MapComplete != undefined) {
+            if (map.MapComplete.GetType != undefined && map.MapComplete.GetType() == "Command") {
+                map.MapComplete.Sender = map;
+                map.MapComplete.Execute();
+            }
+
+            if (typeof (map.MapComplete) == "function")
+                map.MapComplete(e);
+        }
     }
 
+
+    //创建高德地图
+    map.CreateAMap = function () {
+        //创建高德地图
+        map.aMap = new AMap.Map(map.MapDiv.id,{
+            // zoom:3,//级别
+            // center: [125.3247893, 43.8868593],//中心点坐标
+            // viewMode:'2D'//使用3D视图
+            // resizeEnable: true
+            // features: ['bg', 'road', 'building', 'point']
+        });
+
+
+        //地图事件绑定
+        //地图加载完成
+        map.aMap.on("complete", map.OnMapComplete);
+
+        //地图点击
+        // map.aMap.on("click",map.OnMapClick);
+        //     map.aMap.on("mouseup",function () {
+        //         console.log("鼠标抬起")
+        //     });
+        //
+        //     map.aMap.on("touchend",function () {
+        //         console.log("触摸结束")
+        //     });
+    }
 
     //创建点标记
     map.CreatePointMarker = function () {
@@ -488,8 +1038,8 @@ DBFX.Web.Controls.Map = function () {
     //创建定位插件
     map.CreateGeolocation = function () {
         //定位插件
-        AMap.plugin("AMap.Geolocation",function () {
-            map.geolocation = new AMap.Geolocation({
+        AMap.plugin("Amap.Geolocation",function () {
+            map.Geolocation = new AMap.Geolocation({
                 // 是否使用高精度定位，默认：true
                 enableHighAccuracy: true,
                 // 设置定位超时时间，默认：无穷大
@@ -502,10 +1052,10 @@ DBFX.Web.Controls.Map = function () {
                 buttonPosition: 'RB'
             });
             // map.aMap.addControl(geolocation);
-            map.geolocation.getCurrentPosition();
+            map.Geolocation.getCurrentPosition();
 
 
-            AMap.event.addListener(map.geolocation, 'complete', function (data) {
+            AMap.event.addListener(map.Geolocation, 'complete', function (data) {
                 console.log("定位完成"+JSON.stringify(data["position"]));
                 //
 
@@ -523,7 +1073,7 @@ DBFX.Web.Controls.Map = function () {
 
             });
 
-            AMap.event.addListener(map.geolocation, 'error', function (data) {
+            AMap.event.addListener(map.Geolocation, 'error', function (data) {
                 console.log("定位失败"+JSON.stringify(data));
                 //TODO:定位失败需要为用户做个提醒
 
@@ -534,25 +1084,83 @@ DBFX.Web.Controls.Map = function () {
     }
 
 
-    //工具条、比例尺、鹰眼控件、类别切换控件
-    map.CreatePlugins = function () {
-        AMap.plugin(['AMap.Scale',
-            'AMap.OverView',
-            'AMap.MapType',
-        ], function () {
+    //TODO:创建图层
+    map.CreateLayer = function () {
+        // 构造官方卫星、路网"图层"
+        var satelliteLayer = new AMap.TileLayer.Satellite();
+        var roadNetLayer =  new AMap.TileLayer.RoadNet();
 
-            // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
-            // map.aMap.addControl(new AMap.Scale());
+        //批量添加"图层"
+        // map.aMap.add([satelliteLayer, roadNetLayer]);
 
-            // 在图面添加鹰眼控件，在地图右下角显示地图的缩略图
-            // map.aMap.addControl(new AMap.OverView({isOpen:true}));
+        //添加单个"图层"
+        // map.aMap.add(roadNetLayer);
 
-            // 在图面添加类别切换控件，实现默认图层与卫星图、实施交通图层之间切换的控制
-            map.aMap.addControl(new AMap.MapType());
-
-        });
+        //移除"图层"
+        // map.aMap.remove(satelliteLayer);
     }
 
+    //TODO:创建控件  工具条、比例尺、鹰眼控件、类别切换控件
+    map.CreateMapControl = function () {
+        //工具条、比例尺、鹰眼控件、类别切换控件  PC端选择性添加  App端不添加
+
+        //"AMap.DistrictLayer"-简易行政区图层
+        map.aMap.plugin(["AMap.ToolBar",'AMap.Scale','AMap.OverView','AMap.MapType',"AMap.DistrictLayer"],function () {
+
+            //1、工具条  工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
+            map.ToolBar = new AMap.ToolBar();
+
+            //2、比例尺插件。位于地图右下角，用户可控制其显示与隐藏。
+            map.Scale = new AMap.Scale();
+
+            //3、地图鹰眼插件。
+            map.OverView = new AMap.OverView();
+
+            //4、地图类型切换插件。用户通过该插件进行地图切换。
+            map.MapType = new AMap.MapType();
+
+        });
+
+
+
+
+        if(!map.isPhone){
+            //PC端
+
+
+        }else {//App端
+
+            // map.aMap.addControl(map.ToolBar);
+            // map.ToolBar.hideDirection();
+            // map.ToolBar.showLocation();
+
+        }
+
+
+    }
+
+
+    //TODO:工具条、比例尺、鹰眼控件、类别切换控件
+    map.CreatePlugins = function () {
+
+        // AMap.plugin(['AMap.Scale',
+        //     'AMap.OverView',
+        //     'AMap.MapType'
+        // ], function () {
+        //
+        //     // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
+        //     // map.aMap.addControl(new AMap.Scale());
+        //
+        //     // 在图面添加鹰眼控件，在地图右下角显示地图的缩略图
+        //     // map.aMap.addControl(new AMap.OverView({isOpen:true}));
+        //
+        //     // 在图面添加类别切换控件，实现默认图层与卫星图、实施交通图层之间切换的控制
+        //     // map.aMap.addControl(new AMap.MapType());
+        //
+        // });
+
+
+    }
 
     //带检索功能的信息窗体
     map.CreateAdvancedInfoWindow = function () {
@@ -729,61 +1337,9 @@ DBFX.Web.Controls.Map = function () {
         //创建定位插件
         map.CreateGeolocation();
 
-        // 构造官方卫星、路网"图层"
-        var satelliteLayer = new AMap.TileLayer.Satellite();
-        var roadNetLayer =  new AMap.TileLayer.RoadNet();
+        //创建工具条等控件
+        map.CreateMapControl();
 
-        //批量添加"图层"
-        // map.aMap.add([satelliteLayer, roadNetLayer]);
-
-        //添加单个"图层"
-        map.aMap.add(roadNetLayer);
-
-        //移除"图层"
-        // map.aMap.remove(satelliteLayer);
-
-
-        //工具条、比例尺、鹰眼控件、类别切换控件  PC端选择性添加  App端不添加
-        if(!map.isPhone){
-            //PC端
-            map.CreatePlugins();
-            AMap.plugin("AMap.ToolBar",function () {
-                // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
-                map.toolBar = new AMap.ToolBar();
-                map.aMap.addControl(map.toolBar);
-            });
-
-            //带检索功能的信息窗体
-            // map.CreateAdvancedInfoWindow();
-
-            AMap.plugin('AMap.Autocomplete', function(){
-                // 实例化Autocomplete
-                var autoOptions = {
-                    //city 限定城市，默认全国
-                    city: '全国'
-                }
-                var autoComplete= new AMap.Autocomplete(autoOptions);
-                autoComplete.search("修正", function(status, result) {
-                    // 搜索成功时，result即是对应的匹配数据
-                })
-            })
-
-        }else {
-            //App端
-
-            AMap.plugin("AMap.ToolBar",function () {
-                // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
-                map.toolBar = new AMap.ToolBar({
-                    position:"RB"
-                    // liteStyle:true
-                });
-                map.aMap.addControl(map.toolBar);
-                map.toolBar.hideDirection();
-                map.toolBar.showLocation();
-            });
-
-        }
-        
 
         //信息窗体
         //构建信息窗体中显示的内容
@@ -827,6 +1383,7 @@ DBFX.Serializer.MapSerializer = function () {
         // DBFX.Serializer.SerialProperty("Placeholder", c.Placeholder, xe);
 
         //序列化方法
+        DBFX.Serializer.SerializeCommand("MapComplete", c.MapComplete, xe);
         DBFX.Serializer.SerializeCommand("MarkedPosition", c.MarkedPosition, xe);
         DBFX.Serializer.SerializeCommand("MarkerClick", c.MarkerClick, xe);
         DBFX.Serializer.SerializeCommand("POIListItemClick", c.POIListItemClick, xe);
@@ -838,6 +1395,7 @@ DBFX.Serializer.MapSerializer = function () {
         // DBFX.Serializer.DeSerialProperty("Placeholder", c, xe);
 
         //对方法反序列化
+        DBFX.Serializer.DeSerializeCommand("MapComplete", xe, c);
         DBFX.Serializer.DeSerializeCommand("MarkedPosition", xe, c);
         DBFX.Serializer.DeSerializeCommand("MarkerClick", xe, c);
         DBFX.Serializer.DeSerializeCommand("POIListItemClick", xe, c);
@@ -853,7 +1411,8 @@ DBFX.Design.ControlDesigners.MapDesigner = function () {
             od.DataContext = obdc.dataContext;
             //设计器中绑定事件处理
             od.EventListBox = od.FormContext.Form.FormControls.EventListBox;
-            od.EventListBox.ItemSource = [{EventName:"MarkedPosition",EventCode:undefined,Command:od.dataContext.MarkedPosition,Control:od.dataContext},
+            od.EventListBox.ItemSource = [{EventName:"MapComplete",EventCode:undefined,Command:od.dataContext.MapComplete,Control:od.dataContext},
+                                            {EventName:"MarkedPosition",EventCode:undefined,Command:od.dataContext.MarkedPosition,Control:od.dataContext},
                                             {EventName:"MarkerClick",EventCode:undefined,Command:od.dataContext.MarkerClick,Control:od.dataContext},
                                             {EventName:"POIListItemClick",EventCode:undefined,Command:od.dataContext.POIListItemClick,Control:od.dataContext}];
         }, obdc);
@@ -863,9 +1422,10 @@ DBFX.Design.ControlDesigners.MapDesigner = function () {
     obdc.DataContextChanged = function (e) {
         obdc.DataBind(e);
         if(obdc.EventListBox != undefined){
-            obdc.EventListBox.ItemSource = [{EventName:"MarkedPosition",EventCode:undefined,Command:obdc.dataContext.MarkedPosition,Control:obdc.dataContext},
+            obdc.EventListBox.ItemSource = [{EventName:"MapComplete",EventCode:undefined,Command:obdc.dataContext.MapComplete,Control:obdc.dataContext},
+                                            {EventName:"MarkedPosition",EventCode:undefined,Command:obdc.dataContext.MarkedPosition,Control:obdc.dataContext},
                                             {EventName:"MarkerClick",EventCode:undefined,Command:obdc.dataContext.MarkerClick,Control:obdc.dataContext},
-                                            {EventName:"POIListItemClick",EventCode:undefined,Command:od.dataContext.POIListItemClick,Control:od.dataContext}];
+                                            {EventName:"POIListItemClick",EventCode:undefined,Command:obdc.dataContext.POIListItemClick,Control:obdc.dataContext}];
         }
     }
 

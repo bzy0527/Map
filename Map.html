@@ -47,15 +47,39 @@
 <body>
 <div id="div" style="height:80%;width: 100%;border: 1px solid #ffaa30"></div>
 <div id="btn" style="height:40px;width: 100px;border: 1px solid #ffaa30">btn</div>
-<div id="btn01" style="height:40px;width: 100px;border: 1px solid #6786ff">btn01</div>
-<div id="btn02" style="height:40px;width: 100px;border: 1px solid #ffd2bc">btn02</div>
+<div id="btn01" style="height:40px;width: 100px;border: 1px solid #6786ff">搜索附近兴趣点</div>
+<div id="btn02" style="height:40px;width: 100px;border: 1px solid #ffd2bc">设置地图显示中心</div>
+<div id="btn03" style="height:40px;width: 100px;border: 1px solid #ffd2bc">热力图</div>
 
 <script>
     var divE = document.getElementById("div");
     var map1 = new DBFX.Web.Controls.Map();
     divE.appendChild(map1.VisualElement);
-    map1.Width = "800px";
-    map1.Height = "600px";
+    map1.Width = "1000px";
+    map1.Height = "800px";
+
+
+    setTimeout(function () {
+
+        map1.ShowPoint = true;
+        map1.ShowRoad = true;
+        map1.ShowBuilding = true;
+        map1.ShowBG = true;
+        map1.ShowPoint = false;
+        map1.ShowBuilding = false;
+
+        //
+        // map1.DragEnable = false;
+        // map1.DoubleClickZoom = false;
+        map1.Zoom = 4;
+
+        map1.MapStyle = "DisCountry";
+        // map1.MapStyle = "DisProvince";
+
+        map1.SwitchCountry("RUS");
+
+    },1000);
+
 
 
     var pos1 = {lng:125.292078,lat:43.828768,title:"biaoqian1",label:"吉林省长春市"};
@@ -103,10 +127,19 @@
     }
 
 
+    var btn03 = document.getElementById("btn03");
+
+    btn03.onclick = function (ev) {
+        // map1.MapStyle = "DisCountry";
+        console.log("热力图");
+        map1.HeatMap();
+    }
+
     // var map2 = new DBFX.Web.Controls.Map();
     // divE.appendChild(map2.VisualElement);
     // map.OnLoad();
     // map.LoadMap();
+
 
 
     Msg = {
@@ -120,7 +153,8 @@
         ud:{}           //此属性为用户自定义的其它数据，开发者可根据需要定义一些内容
     }
 
-    var a = [1,2,1,3,4,1,2,4,2,4,1,5,7,6];
+    var a = [1,5,1,3,4,1,2,4,2,4,1,5,7,6];
+
     var r = a.filter(function (e,i,self) {
         return self.indexOf(e)===i;
     });

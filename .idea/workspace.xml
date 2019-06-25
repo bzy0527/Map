@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b206b9-cbf6-496c-aa20-36d1c6145479" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/testHeatMap.html" />
-      <change beforePath="$PROJECT_DIR$/Map.css" afterPath="$PROJECT_DIR$/Map.css" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Map.html" afterPath="$PROJECT_DIR$/Map.html" />
       <change beforePath="$PROJECT_DIR$/Map.js" afterPath="$PROJECT_DIR$/Map.js" />
-      <change beforePath="$PROJECT_DIR$/TestAMap.html" afterPath="$PROJECT_DIR$/TestAMap.html" />
-      <change beforePath="$PROJECT_DIR$/TestBMap.html" afterPath="$PROJECT_DIR$/TestBMap.html" />
-      <change beforePath="$PROJECT_DIR$/baidu.js" afterPath="$PROJECT_DIR$/baidu.js" />
+      <change beforePath="$PROJECT_DIR$/MapDesigner.scrp" afterPath="$PROJECT_DIR$/MapDesigner.scrp" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,47 +19,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Map.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Map.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="166" column="9" lean-forward="true" selection-start-line="166" selection-start-column="9" selection-end-line="166" selection-end-column="9" />
-              <folding>
-                <element signature="e#3418#3465#0" expanded="false" />
-                <element signature="e#4523#4846#0" expanded="false" />
-                <element signature="e#7000#9132#0" expanded="false" />
-                <element signature="e#9314#9362#0" expanded="false" />
-                <element signature="e#9411#10164#0" expanded="false" />
-                <element signature="e#10287#10439#0" expanded="false" />
-                <element signature="e#10520#11864#0" expanded="false" />
-                <element signature="e#11915#11952#0" expanded="false" />
-                <element signature="e#12006#12587#0" expanded="false" />
-                <element signature="e#12645#14750#0" expanded="false" />
-                <element signature="e#14805#15724#0" expanded="false" />
-                <element signature="e#15779#17455#0" expanded="false" />
-                <element signature="e#17520#17973#0" expanded="false" />
-                <element signature="e#18040#18498#0" expanded="false" />
-                <element signature="e#18548#19218#0" expanded="false" />
-                <element signature="e#19284#19815#0" expanded="false" />
-                <element signature="e#19880#21212#0" expanded="false" />
-                <element signature="e#21298#22179#0" expanded="false" />
-                <element signature="e#22224#25225#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MapDesigner.scrp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Map.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Map.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Map.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="425">
@@ -72,16 +29,78 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Map.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Map.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="484" column="35" lean-forward="false" selection-start-line="484" selection-start-column="31" selection-end-line="484" selection-end-column="35" />
+              <folding>
+                <element signature="e#3579#3626#0" expanded="false" />
+                <element signature="e#5967#7127#0" expanded="false" />
+                <element signature="e#7316#8556#0" expanded="false" />
+                <element signature="e#8623#9560#0" expanded="false" />
+                <element signature="e#9691#10025#0" expanded="false" />
+                <element signature="e#10110#10403#0" expanded="false" />
+                <element signature="e#10484#10769#0" expanded="false" />
+                <element signature="e#10818#11005#0" expanded="false" />
+                <element signature="e#11050#11238#0" expanded="false" />
+                <element signature="e#11414#11853#0" expanded="false" />
+                <element signature="e#11934#12385#0" expanded="false" />
+                <element signature="e#12476#12951#0" expanded="false" />
+                <element signature="e#13036#13494#0" expanded="false" />
+                <element signature="e#13596#13932#0" expanded="false" />
+                <element signature="e#14046#14402#0" expanded="false" />
+                <element signature="e#14499#14835#0" expanded="false" />
+                <element signature="e#15289#15612#0" expanded="false" />
+                <element signature="e#15684#16180#0" expanded="false" />
+                <element signature="e#16581#17741#0" expanded="false" />
+                <element signature="e#17943#18886#0" expanded="false" />
+                <element signature="e#22317#24449#0" expanded="false" />
+                <element signature="e#24705#24857#0" expanded="false" />
+                <element signature="e#24938#26282#0" expanded="false" />
+                <element signature="e#26333#26370#0" expanded="false" />
+                <element signature="e#26424#27005#0" expanded="false" />
+                <element signature="e#27063#29542#0" expanded="false" />
+                <element signature="e#30327#31246#0" expanded="false" />
+                <element signature="e#31301#32977#0" expanded="false" />
+                <element signature="e#33030#33379#0" expanded="false" />
+                <element signature="e#33457#34251#0" expanded="false" />
+                <element signature="e#34321#34852#0" expanded="false" />
+                <element signature="e#34918#35376#0" expanded="false" />
+                <element signature="e#35426#36096#0" expanded="false" />
+                <element signature="e#36162#36693#0" expanded="false" />
+                <element signature="e#36758#38090#0" expanded="false" />
+                <element signature="e#38176#39057#0" expanded="false" />
+                <element signature="e#40646#41547#0" expanded="false" />
+                <marker date="1561440856364" expanded="true" signature="39808:39819" ph="..." />
+                <marker date="1561440856364" expanded="true" signature="39920:39944" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MapDesigner.scrp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="25" column="33" lean-forward="true" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Map.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Map.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="64" column="45" lean-forward="true" selection-start-line="64" selection-start-column="45" selection-end-line="64" selection-end-column="45" />
+            <state relative-caret-position="468">
+              <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#3629#4167#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -93,6 +112,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -113,11 +133,19 @@
       <find>Array</find>
       <find>OnPOIListItemClick</find>
       <find>POIListItemClick</find>
+      <find>map.CreatePlugins</find>
+      <find>map.geolocation</find>
+      <find>AMap.Map</find>
+      <find>map.OnMapComplete</find>
+      <find>road</find>
+      <find>加载</find>
     </findStrings>
     <replaceStrings>
       <replace>div</replace>
       <replace>map</replace>
       <replace>POIListItemClick</replace>
+      <replace>map.Geolocation</replace>
+      <replace>map.MapComplete</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -131,8 +159,10 @@
         <option value="$PROJECT_DIR$/testHeatMap.html" />
         <option value="$PROJECT_DIR$/Map.css" />
         <option value="$PROJECT_DIR$/TestAMap.html" />
+        <option value="$PROJECT_DIR$/国家与地区SOC.js" />
         <option value="$PROJECT_DIR$/Map.html" />
         <option value="$PROJECT_DIR$/Map.js" />
+        <option value="$PROJECT_DIR$/MapDesigner.scrp" />
       </list>
     </option>
   </component>
@@ -143,10 +173,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="169" />
-    <option name="y" value="-1330" />
-    <option name="width" value="1585" />
-    <option name="height" value="1210" />
+    <option name="x" value="488" />
+    <option name="y" value="-1417" />
+    <option name="width" value="1354" />
+    <option name="height" value="1417" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -214,18 +244,22 @@
       <workItem from="1559177626343" duration="234000" />
       <workItem from="1559520878853" duration="34641000" />
       <workItem from="1560126422417" duration="1731000" />
-      <workItem from="1560301930159" duration="670000" />
+      <workItem from="1560301930159" duration="12236000" />
+      <workItem from="1560477596768" duration="7706000" />
+      <workItem from="1560729758556" duration="12223000" />
+      <workItem from="1561011313236" duration="24116000" />
+      <workItem from="1561425033073" duration="7030000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42400000" />
+    <option name="totallyTimeSpent" value="105041000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="169" y="-1330" width="1585" height="1210" extended-state="0" />
+    <frame x="488" y="-1417" width="1354" height="1417" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16496164" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19354838" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -296,7 +330,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18989">
           <caret line="1130" column="80" lean-forward="false" selection-start-line="1130" selection-start-column="80" selection-end-line="1130" selection-end-column="80" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -304,7 +337,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
           <caret line="49" column="15" lean-forward="true" selection-start-line="49" selection-start-column="15" selection-end-line="49" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -316,51 +348,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
+    <entry file="file://$PROJECT_DIR$/国家与地区SOC.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="10834">
+          <caret line="1141" column="12" lean-forward="false" selection-start-line="1141" selection-start-column="12" selection-end-line="1141" selection-end-column="12" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Map.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="166" column="9" lean-forward="true" selection-start-line="166" selection-start-column="9" selection-end-line="166" selection-end-column="9" />
-          <folding>
-            <element signature="e#3418#3465#0" expanded="false" />
-            <element signature="e#4523#4846#0" expanded="false" />
-            <element signature="e#7000#9132#0" expanded="false" />
-            <element signature="e#9314#9362#0" expanded="false" />
-            <element signature="e#9411#10164#0" expanded="false" />
-            <element signature="e#10287#10439#0" expanded="false" />
-            <element signature="e#10520#11864#0" expanded="false" />
-            <element signature="e#11915#11952#0" expanded="false" />
-            <element signature="e#12006#12587#0" expanded="false" />
-            <element signature="e#12645#14750#0" expanded="false" />
-            <element signature="e#14805#15724#0" expanded="false" />
-            <element signature="e#15779#17455#0" expanded="false" />
-            <element signature="e#17520#17973#0" expanded="false" />
-            <element signature="e#18040#18498#0" expanded="false" />
-            <element signature="e#18548#19218#0" expanded="false" />
-            <element signature="e#19284#19815#0" expanded="false" />
-            <element signature="e#19880#21212#0" expanded="false" />
-            <element signature="e#21298#22179#0" expanded="false" />
-            <element signature="e#22224#25225#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="64" column="45" lean-forward="true" selection-start-line="64" selection-start-column="45" selection-end-line="64" selection-end-column="45" />
+        <state relative-caret-position="468">
+          <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#3629#4167#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -369,6 +375,62 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="484" column="35" lean-forward="false" selection-start-line="484" selection-start-column="31" selection-end-line="484" selection-end-column="35" />
+          <folding>
+            <element signature="e#3579#3626#0" expanded="false" />
+            <element signature="e#5967#7127#0" expanded="false" />
+            <element signature="e#7316#8556#0" expanded="false" />
+            <element signature="e#8623#9560#0" expanded="false" />
+            <element signature="e#9691#10025#0" expanded="false" />
+            <element signature="e#10110#10403#0" expanded="false" />
+            <element signature="e#10484#10769#0" expanded="false" />
+            <element signature="e#10818#11005#0" expanded="false" />
+            <element signature="e#11050#11238#0" expanded="false" />
+            <element signature="e#11414#11853#0" expanded="false" />
+            <element signature="e#11934#12385#0" expanded="false" />
+            <element signature="e#12476#12951#0" expanded="false" />
+            <element signature="e#13036#13494#0" expanded="false" />
+            <element signature="e#13596#13932#0" expanded="false" />
+            <element signature="e#14046#14402#0" expanded="false" />
+            <element signature="e#14499#14835#0" expanded="false" />
+            <element signature="e#15289#15612#0" expanded="false" />
+            <element signature="e#15684#16180#0" expanded="false" />
+            <element signature="e#16581#17741#0" expanded="false" />
+            <element signature="e#17943#18886#0" expanded="false" />
+            <element signature="e#22317#24449#0" expanded="false" />
+            <element signature="e#24705#24857#0" expanded="false" />
+            <element signature="e#24938#26282#0" expanded="false" />
+            <element signature="e#26333#26370#0" expanded="false" />
+            <element signature="e#26424#27005#0" expanded="false" />
+            <element signature="e#27063#29542#0" expanded="false" />
+            <element signature="e#30327#31246#0" expanded="false" />
+            <element signature="e#31301#32977#0" expanded="false" />
+            <element signature="e#33030#33379#0" expanded="false" />
+            <element signature="e#33457#34251#0" expanded="false" />
+            <element signature="e#34321#34852#0" expanded="false" />
+            <element signature="e#34918#35376#0" expanded="false" />
+            <element signature="e#35426#36096#0" expanded="false" />
+            <element signature="e#36162#36693#0" expanded="false" />
+            <element signature="e#36758#38090#0" expanded="false" />
+            <element signature="e#38176#39057#0" expanded="false" />
+            <element signature="e#40646#41547#0" expanded="false" />
+            <marker date="1561440856364" expanded="true" signature="39808:39819" ph="..." />
+            <marker date="1561440856364" expanded="true" signature="39920:39944" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="33" lean-forward="true" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
           <folding />
         </state>
       </provider>

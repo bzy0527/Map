@@ -8,6 +8,47 @@
   </xns>
 
   <controls>
+    <c T="wc:Panel"  Name="SVGPanelDesignerPanel" Shadow="none" BorderWidth="0px" Margin="2px 0px 2px 0px" MinWidth="230px" BackgroundColor="#ddd">
+           <controls>
+
+           <c T="wc:BreakLine" />
+           <c T="wc:Label" Text="缩放级别:" Margin="4px 2px 2px 16px" Float="left"/>
+           <c T="wc:TextBox" Display="block" Height="26px" Margin="2px 14px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;Zoom&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}" />
+
+           <c T="wc:BreakLine" />
+           <c T="wc:Label" Text="数 据 域:" Margin="4px 2px 2px 16px" Float="left"/>
+           <c T="wc:ComboBox" Name="cbxDataDomain" Text="" Display="block" Height="26px" Margin="2px 14px 2px 16px" Mode="1" DataBindings="{&quot;Path&quot;:&quot;DataDomain&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}" />
+
+           <c T="wc:BreakLine" />
+           <c T="wc:Label" Text="数据属性:" Margin="4px 2px 2px 16px" Float="left"/>
+           <c T="wc:TextBox" Display="block" Height="26px" Margin="2px 14px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;DataProperty&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}" />
+
+           <c T="wc:BreakLine" />
+           <c T="wc:Label" Text="绑定路径:" Margin="4px 2px 2px 16px" Float="left"/>
+           <c T="wc:TextBox" Display="block" Height="26px" Margin="2px 14px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;DataBindings.Path&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}" />
+
+            <c T="wc:BreakLine" BackgroundColor="lightgray" Height="1px" Margin="4px 2px 4px 2px"/>
+            <c T="wc:CheckedBox" Text="工具栏 " Margin="3px 2px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;ShowToolBar&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
+            <c T="wc:CheckedBox" Text="地图Logo " Margin="3px 2px 2px 4px" DataBindings="{&quot;Path&quot;:&quot;ShowLogo&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
+
+            <c T="wc:BreakLine" BackgroundColor="lightgray" Height="1px" Margin="4px 2px 4px 2px"/>
+            <c T="wc:CheckedBox" Text="版权信息 " Margin="3px 2px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;ShowCR&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
+            <c T="wc:CheckedBox" Text="区域面 " Margin="3px 2px 2px 4px" DataBindings="{&quot;Path&quot;:&quot;ShowBG&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
+
+            <c T="wc:BreakLine" BackgroundColor="lightgray" Height="1px" Margin="4px 2px 4px 2px"/>
+            <c T="wc:CheckedBox" Text="道路 " Margin="3px 2px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;ShowRoad&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
+            <c T="wc:CheckedBox" Text="建筑物 " Margin="3px 2px 2px 4px" DataBindings="{&quot;Path&quot;:&quot;ShowBuilding&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
+
+            <c T="wc:BreakLine" BackgroundColor="lightgray" Height="1px" Margin="4px 2px 4px 2px"/>
+            <c T="wc:CheckedBox" Text="标注 " Margin="3px 2px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;ShowPoint&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
+            <c T="wc:CheckedBox" Text="拖拽平移 " Margin="3px 2px 2px 4px" DataBindings="{&quot;Path&quot;:&quot;DragEnable&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
+
+            <c T="wc:BreakLine" BackgroundColor="lightgray" Height="1px" Margin="4px 2px 4px 2px"/>
+            <c T="wc:CheckedBox" Text="双击放大 " Margin="3px 2px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;DoubleClickZoom&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
+            <c T="wc:CheckedBox" Text="支持缩放 " Margin="3px 2px 2px 4px" DataBindings="{&quot;Path&quot;:&quot;ZoomEnable&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
+
+           </controls>
+       </c>
 
     <c T="dv:TypeEditors.EventList" Name="EventListBox" Text="事件处理程序" Shadow="node" Margin="2px 0px 2px 0px" MinWidth="64px">
     </c>
