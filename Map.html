@@ -50,6 +50,11 @@
 <div id="btn01" style="height:40px;width: 100px;border: 1px solid #6786ff">搜索附近兴趣点</div>
 <div id="btn02" style="height:40px;width: 100px;border: 1px solid #ffd2bc">设置地图显示中心</div>
 <div id="btn03" style="height:40px;width: 100px;border: 1px solid #ffd2bc">热力图</div>
+<input type="text" tabindex="1">
+<input type="text" tabindex="2">
+<input type="text" tabindex="3">
+<input type="text" tabindex="4">
+<input type="text" tabindex="5">
 
 <script>
     var divE = document.getElementById("div");
@@ -58,27 +63,107 @@
     map1.Width = "1000px";
     map1.Height = "800px";
 
+    map1.ShoTools = true;
+    map1.ShowLogo = false;
+    // map1.ShowCR = false;
+    // map1.Zoom = 11;
+    map1.ShowScale = true;
+    // map1.ShowToolBar = false;
+    map1.ShowToolBar = true;
+    map1.ShowToolBar = false;
+    map1.ShowScale = false;
+    map1.ShowScale = true;
+    map1.ShowScale = true;
+    map1.ShowScale = true;
+    map1.ShowScale = false;
+    // map1.ShowOverView = true;
+    // map1.ShowMapType = true;
+
+
 
     setTimeout(function () {
-
-        map1.ShowPoint = true;
-        map1.ShowRoad = true;
-        map1.ShowBuilding = true;
-        map1.ShowBG = true;
-        map1.ShowPoint = false;
-        map1.ShowBuilding = false;
 
         //
         // map1.DragEnable = false;
         // map1.DoubleClickZoom = false;
-        map1.Zoom = 4;
+        // map1.Zoom = 4;
 
-        map1.MapStyle = "DisCountry";
+
         // map1.MapStyle = "DisProvince";
 
-        map1.SwitchCountry("RUS");
+        // map1.SwitchCountry("RUS");
+
+        // map1.Zoom = 4;
 
     },1000);
+
+    map1.MapStyle = "DisProvince";
+
+    var dataSet = {
+        options:{
+            radius: 25, //给定半径
+            opacity: [0, 0.8],//透明度范围
+            gradient: {         //设置渐变色
+                0.5: 'blue',
+                0.65: 'rgb(117,211,248)',
+                0.7: 'rgb(0, 255, 0)',
+                0.9: '#ffea00',
+                1.0: 'red'
+            }},
+        data: [{
+            "lng": 116.191031,//经度值
+            "lat": 39.988585,//纬度值
+            "count": 10       //数值
+        }, {
+            "lng": 116.389275,
+            "lat": 39.925818,
+            "count": 11
+        }, {
+            "lng": 116.287444,
+            "lat": 39.810742,
+            "count": 12
+        }, {
+            "lng": 116.481707,
+            "lat": 39.940089,
+            "count": 13
+        }, {
+            "lng": 116.410588,
+            "lat": 39.880172,
+            "count": 14
+        }, {
+            "lng": 116.394816,
+            "lat": 39.91181,
+            "count": 15
+        }, {
+            "lng": 116.416002,
+            "lat": 39.952917,
+            "count": 16
+        }, {
+            "lng": 116.39671,
+            "lat": 39.924903,
+            "count": 17
+        }, {
+            "lng": 116.180816,
+            "lat": 39.957553,
+            "count": 18
+        }, {
+            "lng": 116.382035,
+            "lat": 39.874114,
+            "count": 19
+        }, {
+            "lng": 116.316648,
+            "lat": 39.914529,
+            "count": 20
+        }, {
+            "lng": 116.395803,
+            "lat": 39.908556,
+            "count": 21
+        }],
+        max: 20             //最大值
+    }
+    map1.HeatMapData = dataSet;
+
+
 
 
 
@@ -121,6 +206,7 @@
         map1.PlaceSearchNearBy(config);
     }
 
+
     var btn02 = document.getElementById("btn02");
     btn02.onclick = function (ev) {
         map1.setMapCenter([116.405467, 39.907761]);
@@ -128,11 +214,63 @@
 
 
     var btn03 = document.getElementById("btn03");
-
     btn03.onclick = function (ev) {
         // map1.MapStyle = "DisCountry";
         console.log("热力图");
-        map1.HeatMap();
+        //设置数据集：该数据为北京部分“公园”数据
+        var dataSet = {
+            data: [{
+                "lng": 116.191031,
+                "lat": 39.988585,
+                "count": 10
+            }, {
+                "lng": 116.389275,
+                "lat": 39.925818,
+                "count": 11
+            }, {
+                "lng": 116.287444,
+                "lat": 39.810742,
+                "count": 12
+            }, {
+                "lng": 116.481707,
+                "lat": 39.940089,
+                "count": 13
+            }, {
+                "lng": 116.410588,
+                "lat": 39.880172,
+                "count": 14
+            }, {
+                "lng": 116.394816,
+                "lat": 39.91181,
+                "count": 15
+            }, {
+                "lng": 116.416002,
+                "lat": 39.952917,
+                "count": 16
+            }, {
+                "lng": 116.39671,
+                "lat": 39.924903,
+                "count": 17
+            }, {
+                "lng": 116.180816,
+                "lat": 39.957553,
+                "count": 18
+            }, {
+                "lng": 116.382035,
+                "lat": 39.874114,
+                "count": 19
+            }, {
+                "lng": 116.316648,
+                "lat": 39.914529,
+                "count": 20
+            }, {
+                "lng": 116.395803,
+                "lat": 39.908556,
+                "count": 21
+            }],
+            max: 20
+        }
+        map1.HeatMap(dataSet);
     }
 
     // var map2 = new DBFX.Web.Controls.Map();
@@ -164,6 +302,10 @@
     // var arr = [];
     // arr.push(23,45);
     // console.log(arr);
+
+    console.log(JSON.stringify({"count":"1.6666"*1}));
+    console.log(JSON.stringify(JSON.stringify({"count":"1.6666"*1})));
+
 
 </script>
 

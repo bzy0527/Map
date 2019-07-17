@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="53b206b9-cbf6-496c-aa20-36d1c6145479" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Map.css" afterPath="$PROJECT_DIR$/Map.css" />
       <change beforePath="$PROJECT_DIR$/Map.html" afterPath="$PROJECT_DIR$/Map.html" />
       <change beforePath="$PROJECT_DIR$/Map.js" afterPath="$PROJECT_DIR$/Map.js" />
       <change beforePath="$PROJECT_DIR$/MapDesigner.scrp" afterPath="$PROJECT_DIR$/MapDesigner.scrp" />
@@ -22,68 +24,76 @@
       <file leaf-file-name="Map.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Map.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+            <state relative-caret-position="1122">
+              <caret line="66" column="1" lean-forward="false" selection-start-line="66" selection-start-column="1" selection-end-line="66" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Map.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Map.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="484" column="35" lean-forward="false" selection-start-line="484" selection-start-column="31" selection-end-line="484" selection-end-column="35" />
+            <state relative-caret-position="323">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding>
-                <element signature="e#3579#3626#0" expanded="false" />
-                <element signature="e#5967#7127#0" expanded="false" />
-                <element signature="e#7316#8556#0" expanded="false" />
-                <element signature="e#8623#9560#0" expanded="false" />
-                <element signature="e#9691#10025#0" expanded="false" />
-                <element signature="e#10110#10403#0" expanded="false" />
-                <element signature="e#10484#10769#0" expanded="false" />
-                <element signature="e#10818#11005#0" expanded="false" />
-                <element signature="e#11050#11238#0" expanded="false" />
-                <element signature="e#11414#11853#0" expanded="false" />
-                <element signature="e#11934#12385#0" expanded="false" />
-                <element signature="e#12476#12951#0" expanded="false" />
-                <element signature="e#13036#13494#0" expanded="false" />
-                <element signature="e#13596#13932#0" expanded="false" />
-                <element signature="e#14046#14402#0" expanded="false" />
-                <element signature="e#14499#14835#0" expanded="false" />
-                <element signature="e#15289#15612#0" expanded="false" />
-                <element signature="e#15684#16180#0" expanded="false" />
-                <element signature="e#16581#17741#0" expanded="false" />
-                <element signature="e#17943#18886#0" expanded="false" />
-                <element signature="e#22317#24449#0" expanded="false" />
-                <element signature="e#24705#24857#0" expanded="false" />
-                <element signature="e#24938#26282#0" expanded="false" />
-                <element signature="e#26333#26370#0" expanded="false" />
-                <element signature="e#26424#27005#0" expanded="false" />
-                <element signature="e#27063#29542#0" expanded="false" />
-                <element signature="e#30327#31246#0" expanded="false" />
-                <element signature="e#31301#32977#0" expanded="false" />
-                <element signature="e#33030#33379#0" expanded="false" />
-                <element signature="e#33457#34251#0" expanded="false" />
-                <element signature="e#34321#34852#0" expanded="false" />
-                <element signature="e#34918#35376#0" expanded="false" />
-                <element signature="e#35426#36096#0" expanded="false" />
-                <element signature="e#36162#36693#0" expanded="false" />
-                <element signature="e#36758#38090#0" expanded="false" />
-                <element signature="e#38176#39057#0" expanded="false" />
-                <element signature="e#40646#41547#0" expanded="false" />
-                <marker date="1561440856364" expanded="true" signature="39808:39819" ph="..." />
-                <marker date="1561440856364" expanded="true" signature="39920:39944" ph="..." />
+                <element signature="e#1335#4802#0" expanded="false" />
+                <element signature="e#6235#6718#0" expanded="false" />
+                <element signature="e#8417#9659#0" expanded="false" />
+                <element signature="e#9726#10663#0" expanded="false" />
+                <element signature="e#10770#11147#0" expanded="false" />
+                <element signature="e#11233#11571#0" expanded="false" />
+                <element signature="e#11653#11982#0" expanded="false" />
+                <element signature="e#12031#12334#0" expanded="false" />
+                <element signature="e#12379#12576#0" expanded="false" />
+                <element signature="e#12751#13273#0" expanded="false" />
+                <element signature="e#13353#13889#0" expanded="false" />
+                <element signature="e#13979#14544#0" expanded="false" />
+                <element signature="e#15274#15628#0" expanded="false" />
+                <element signature="e#15742#16122#0" expanded="false" />
+                <element signature="e#16219#16573#0" expanded="false" />
+                <element signature="e#16679#16895#0" expanded="false" />
+                <element signature="e#16933#17002#0" expanded="false" />
+                <element signature="e#17060#17383#0" expanded="false" />
+                <element signature="e#17455#17951#0" expanded="false" />
+                <element signature="e#18352#19512#0" expanded="false" />
+                <element signature="e#18462#19504#0" expanded="false" />
+                <element signature="e#20301#22433#0" expanded="false" />
+                <element signature="e#22685#22837#0" expanded="false" />
+                <element signature="e#22918#24262#0" expanded="false" />
+                <element signature="e#24404#24985#0" expanded="false" />
+                <element signature="e#25107#29252#0" expanded="false" />
+                <element signature="e#25935#27453#0" expanded="false" />
+                <element signature="e#29301#29821#0" expanded="false" />
+                <element signature="e#29875#30797#0" expanded="false" />
+                <element signature="e#30852#32529#0" expanded="false" />
+                <element signature="e#32626#33078#0" expanded="false" />
+                <element signature="e#33173#33611#0" expanded="false" />
+                <element signature="e#33665#34014#0" expanded="false" />
+                <element signature="e#34106#34531#0" expanded="false" />
+                <element signature="e#34621#35032#0" expanded="false" />
+                <element signature="e#35127#35559#0" expanded="false" />
+                <element signature="e#35656#36081#0" expanded="false" />
+                <element signature="e#36163#37141#0" expanded="false" />
+                <element signature="e#37187#37397#0" expanded="false" />
+                <element signature="e#37463#37921#0" expanded="false" />
+                <element signature="e#37971#38641#0" expanded="false" />
+                <element signature="e#38707#39238#0" expanded="false" />
+                <element signature="e#39303#40635#0" expanded="false" />
+                <element signature="e#40721#41602#0" expanded="false" />
+                <element signature="e#41645#42044#0" expanded="false" />
+                <element signature="e#42201#45520#0" expanded="false" />
+                <element signature="e#45577#47533#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MapDesigner.scrp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MapDesigner.scrp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="33" lean-forward="true" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+            <state relative-caret-position="0">
+              <caret line="0" column="9" lean-forward="true" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -92,15 +102,17 @@
       <file leaf-file-name="Map.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Map.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+            <state relative-caret-position="2448">
+              <caret line="144" column="12" lean-forward="true" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#3629#4167#0" expanded="false" />
+                <element signature="e#5517#5592#0" expanded="false" />
+                <element signature="e#5680#6218#0" expanded="false" />
+                <element signature="e#6575#7992#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -118,27 +130,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>setatt</find>
-      <find>property</find>
-      <find>DIV</find>
-      <find>setattribute</find>
-      <find>O(&quot;s</find>
-      <find>propertychan</find>
-      <find>城市代码</find>
-      <find>map123</find>
-      <find>setMapCenter</find>
-      <find>ItemClick</find>
-      <find>map.City</find>
-      <find>MarkerClick</find>
-      <find>Array</find>
-      <find>OnPOIListItemClick</find>
-      <find>POIListItemClick</find>
       <find>map.CreatePlugins</find>
       <find>map.geolocation</find>
       <find>AMap.Map</find>
       <find>map.OnMapComplete</find>
       <find>road</find>
       <find>加载</find>
+      <find>getColorByDGP</find>
+      <find>showIndoorMap</find>
+      <find>map.amap</find>
+      <find>map.heatmap</find>
+      <find>infoWindow</find>
+      <find>zoom</find>
+      <find>currentmarker</find>
+      <find>map.aMap.add(map.currentMarker);</find>
+      <find>AMap.Geolocation</find>
+      <find>map.CreateGeolocation</find>
+      <find>plugin</find>
+      <find>showCR</find>
+      <find>AMap.ToolBar</find>
+      <find>map.CreateMapControl</find>
+      <find>DistrictLayer</find>
+      <find>showSatellite</find>
+      <find>拖拽</find>
+      <find>map.aMap.setStatus</find>
+      <find>map.logoImg</find>
+      <find>[表情]</find>
+      <find>MarkerClick</find>
+      <find>map.heatMapData</find>
+      <find>map.DrawDisCountry</find>
+      <find>标注</find>
     </findStrings>
     <replaceStrings>
       <replace>div</replace>
@@ -146,6 +167,10 @@
       <replace>POIListItemClick</replace>
       <replace>map.Geolocation</replace>
       <replace>map.MapComplete</replace>
+      <replace>dg</replace>
+      <replace>/dg</replace>
+      <replace>titem</replace>
+      <replace>SelectedItemChanged</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -157,12 +182,15 @@
         <option value="$PROJECT_DIR$/baidu.js" />
         <option value="$PROJECT_DIR$/TestBMap.html" />
         <option value="$PROJECT_DIR$/testHeatMap.html" />
-        <option value="$PROJECT_DIR$/Map.css" />
         <option value="$PROJECT_DIR$/TestAMap.html" />
         <option value="$PROJECT_DIR$/国家与地区SOC.js" />
+        <option value="$PROJECT_DIR$/yinuo.html" />
+        <option value="$PROJECT_DIR$/qrcode.html" />
+        <option value="$PROJECT_DIR$/Map.css" />
+        <option value="$PROJECT_DIR$/MapDesigner.scrp" />
+        <option value="$PROJECT_DIR$/ToolStripDropdownList.js" />
         <option value="$PROJECT_DIR$/Map.html" />
         <option value="$PROJECT_DIR$/Map.js" />
-        <option value="$PROJECT_DIR$/MapDesigner.scrp" />
       </list>
     </option>
   </component>
@@ -172,11 +200,11 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="488" />
-    <option name="y" value="-1417" />
-    <option name="width" value="1354" />
-    <option name="height" value="1417" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-508" />
+    <option name="y" value="-1397" />
+    <option name="width" value="1426" />
+    <option name="height" value="1259" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -193,7 +221,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -205,6 +232,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -248,25 +276,31 @@
       <workItem from="1560477596768" duration="7706000" />
       <workItem from="1560729758556" duration="12223000" />
       <workItem from="1561011313236" duration="24116000" />
-      <workItem from="1561425033073" duration="7030000" />
+      <workItem from="1561425033073" duration="7286000" />
+      <workItem from="1561444793069" duration="26236000" />
+      <workItem from="1561940992652" duration="21561000" />
+      <workItem from="1562130690698" duration="16180000" />
+      <workItem from="1562544464547" duration="13238000" />
+      <workItem from="1562822490134" duration="7812000" />
+      <workItem from="1563149807830" duration="2255000" />
+      <workItem from="1563331678240" duration="493000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="105041000" />
+    <option name="totallyTimeSpent" value="193072000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="488" y="-1417" width="1354" height="1417" extended-state="0" />
-    <editor active="true" />
+    <frame x="-508" y="-1397" width="1426" height="1259" extended-state="1" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19354838" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1836299" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -286,11 +320,521 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="9" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Map.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6715">
+          <caret line="395" column="65" lean-forward="false" selection-start-line="395" selection-start-column="65" selection-end-line="395" selection-end-column="65" />
+          <folding>
+            <element signature="e#1335#4802#0" expanded="false" />
+            <element signature="e#6235#6718#0" expanded="false" />
+            <element signature="e#8417#9659#0" expanded="false" />
+            <element signature="e#9726#10663#0" expanded="false" />
+            <element signature="e#10770#11147#0" expanded="false" />
+            <element signature="e#11233#11571#0" expanded="false" />
+            <element signature="e#11653#11982#0" expanded="false" />
+            <element signature="e#12031#12334#0" expanded="false" />
+            <element signature="e#12379#12576#0" expanded="false" />
+            <element signature="e#12751#13273#0" expanded="false" />
+            <element signature="e#13353#13889#0" expanded="false" />
+            <element signature="e#13979#14544#0" expanded="false" />
+            <element signature="e#15274#15628#0" expanded="false" />
+            <element signature="e#15742#16122#0" expanded="false" />
+            <element signature="e#16219#16573#0" expanded="false" />
+            <element signature="e#16679#16895#0" expanded="false" />
+            <element signature="e#16933#17002#0" expanded="false" />
+            <element signature="e#17060#17383#0" expanded="false" />
+            <element signature="e#17455#17951#0" expanded="false" />
+            <element signature="e#18352#19512#0" expanded="false" />
+            <element signature="e#18462#19504#0" expanded="false" />
+            <element signature="e#20301#22433#0" expanded="false" />
+            <element signature="e#22685#22837#0" expanded="false" />
+            <element signature="e#22918#24262#0" expanded="false" />
+            <element signature="e#24404#24985#0" expanded="false" />
+            <element signature="e#25107#29252#0" expanded="false" />
+            <element signature="e#25935#27453#0" expanded="false" />
+            <element signature="e#29301#29821#0" expanded="false" />
+            <element signature="e#29875#30797#0" expanded="false" />
+            <element signature="e#30852#32529#0" expanded="false" />
+            <element signature="e#32626#33078#0" expanded="false" />
+            <element signature="e#33173#33611#0" expanded="false" />
+            <element signature="e#33665#34014#0" expanded="false" />
+            <element signature="e#34106#34531#0" expanded="false" />
+            <element signature="e#34621#35032#0" expanded="false" />
+            <element signature="e#35127#35559#0" expanded="false" />
+            <element signature="e#35656#36081#0" expanded="false" />
+            <element signature="e#36163#37141#0" expanded="false" />
+            <element signature="e#37187#37397#0" expanded="false" />
+            <element signature="e#37463#37921#0" expanded="false" />
+            <element signature="e#37971#38641#0" expanded="false" />
+            <element signature="e#38707#39238#0" expanded="false" />
+            <element signature="e#39303#40635#0" expanded="false" />
+            <element signature="e#40721#41602#0" expanded="false" />
+            <element signature="e#41645#42044#0" expanded="false" />
+            <element signature="e#42201#45520#0" expanded="false" />
+            <element signature="e#45577#47533#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="9" lean-forward="true" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2448">
+          <caret line="144" column="12" lean-forward="true" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#5517#5592#0" expanded="false" />
+            <element signature="e#5680#6218#0" expanded="false" />
+            <element signature="e#6575#7992#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6715">
+          <caret line="395" column="65" lean-forward="true" selection-start-line="395" selection-start-column="65" selection-end-line="395" selection-end-column="65" />
+          <folding>
+            <element signature="e#1335#4802#0" expanded="false" />
+            <element signature="e#6235#6718#0" expanded="false" />
+            <element signature="e#8417#9659#0" expanded="false" />
+            <element signature="e#9726#10663#0" expanded="false" />
+            <element signature="e#10770#11147#0" expanded="false" />
+            <element signature="e#11233#11571#0" expanded="false" />
+            <element signature="e#11653#11982#0" expanded="false" />
+            <element signature="e#12031#12334#0" expanded="false" />
+            <element signature="e#12379#12576#0" expanded="false" />
+            <element signature="e#12751#13273#0" expanded="false" />
+            <element signature="e#13353#13889#0" expanded="false" />
+            <element signature="e#13979#14544#0" expanded="false" />
+            <element signature="e#15274#15628#0" expanded="false" />
+            <element signature="e#15742#16122#0" expanded="false" />
+            <element signature="e#16219#16573#0" expanded="false" />
+            <element signature="e#16679#16895#0" expanded="false" />
+            <element signature="e#16933#17002#0" expanded="false" />
+            <element signature="e#17060#17383#0" expanded="false" />
+            <element signature="e#17455#17951#0" expanded="false" />
+            <element signature="e#18352#19512#0" expanded="false" />
+            <element signature="e#18462#19504#0" expanded="false" />
+            <element signature="e#20301#22433#0" expanded="false" />
+            <element signature="e#22685#22837#0" expanded="false" />
+            <element signature="e#22918#24262#0" expanded="false" />
+            <element signature="e#24404#24985#0" expanded="false" />
+            <element signature="e#25107#29252#0" expanded="false" />
+            <element signature="e#25935#27453#0" expanded="false" />
+            <element signature="e#29301#29821#0" expanded="false" />
+            <element signature="e#29875#30797#0" expanded="false" />
+            <element signature="e#30852#32529#0" expanded="false" />
+            <element signature="e#32626#33078#0" expanded="false" />
+            <element signature="e#33173#33611#0" expanded="false" />
+            <element signature="e#33665#34014#0" expanded="false" />
+            <element signature="e#34106#34531#0" expanded="false" />
+            <element signature="e#34621#35032#0" expanded="false" />
+            <element signature="e#35127#35559#0" expanded="false" />
+            <element signature="e#35656#36081#0" expanded="false" />
+            <element signature="e#36163#37141#0" expanded="false" />
+            <element signature="e#37187#37397#0" expanded="false" />
+            <element signature="e#37463#37921#0" expanded="false" />
+            <element signature="e#37971#38641#0" expanded="false" />
+            <element signature="e#38707#39238#0" expanded="false" />
+            <element signature="e#39303#40635#0" expanded="false" />
+            <element signature="e#40721#41602#0" expanded="false" />
+            <element signature="e#41645#42044#0" expanded="false" />
+            <element signature="e#42201#45520#0" expanded="false" />
+            <element signature="e#45577#47533#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="9" lean-forward="true" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2448">
+          <caret line="144" column="12" lean-forward="true" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#5517#5592#0" expanded="false" />
+            <element signature="e#5680#6218#0" expanded="false" />
+            <element signature="e#6575#7992#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21233">
+          <caret line="1249" column="5" lean-forward="true" selection-start-line="1249" selection-start-column="5" selection-end-line="1249" selection-end-column="5" />
+          <folding>
+            <element signature="e#1335#4802#0" expanded="false" />
+            <element signature="e#6235#6718#0" expanded="false" />
+            <element signature="e#8417#9659#0" expanded="false" />
+            <element signature="e#9726#10663#0" expanded="false" />
+            <element signature="e#10770#11147#0" expanded="false" />
+            <element signature="e#11233#11571#0" expanded="false" />
+            <element signature="e#11653#11982#0" expanded="false" />
+            <element signature="e#12031#12334#0" expanded="false" />
+            <element signature="e#12379#12576#0" expanded="false" />
+            <element signature="e#12751#13273#0" expanded="false" />
+            <element signature="e#13353#13889#0" expanded="false" />
+            <element signature="e#13979#14544#0" expanded="false" />
+            <element signature="e#15274#15628#0" expanded="false" />
+            <element signature="e#15742#16122#0" expanded="false" />
+            <element signature="e#16219#16573#0" expanded="false" />
+            <element signature="e#16679#16895#0" expanded="false" />
+            <element signature="e#16933#17002#0" expanded="false" />
+            <element signature="e#17060#17383#0" expanded="false" />
+            <element signature="e#17455#17951#0" expanded="false" />
+            <element signature="e#18352#19512#0" expanded="false" />
+            <element signature="e#18462#19504#0" expanded="false" />
+            <element signature="e#20301#22433#0" expanded="false" />
+            <element signature="e#22685#22837#0" expanded="false" />
+            <element signature="e#22918#24262#0" expanded="false" />
+            <element signature="e#24404#24985#0" expanded="false" />
+            <element signature="e#25107#29252#0" expanded="false" />
+            <element signature="e#25935#27453#0" expanded="false" />
+            <element signature="e#29301#29821#0" expanded="false" />
+            <element signature="e#29875#30797#0" expanded="false" />
+            <element signature="e#30852#32529#0" expanded="false" />
+            <element signature="e#32626#33078#0" expanded="false" />
+            <element signature="e#33173#33611#0" expanded="false" />
+            <element signature="e#33665#34014#0" expanded="false" />
+            <element signature="e#34106#34531#0" expanded="false" />
+            <element signature="e#34621#35032#0" expanded="false" />
+            <element signature="e#35127#35559#0" expanded="false" />
+            <element signature="e#35656#36081#0" expanded="false" />
+            <element signature="e#36163#37141#0" expanded="false" />
+            <element signature="e#37187#37397#0" expanded="false" />
+            <element signature="e#37463#37921#0" expanded="false" />
+            <element signature="e#37971#38641#0" expanded="false" />
+            <element signature="e#38707#39238#0" expanded="false" />
+            <element signature="e#39303#40635#0" expanded="false" />
+            <element signature="e#40721#41602#0" expanded="false" />
+            <element signature="e#41645#42044#0" expanded="false" />
+            <element signature="e#42201#45520#0" expanded="false" />
+            <element signature="e#45577#47533#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="9" lean-forward="true" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1717">
+          <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="162" selection-end-column="6" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#5517#5592#0" expanded="false" />
+            <element signature="e#5680#6218#0" expanded="false" />
+            <element signature="e#6575#7992#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ToolStripDropdownList.js" />
+    <entry file="file://$PROJECT_DIR$/Map.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16167">
+          <caret line="951" column="5" lean-forward="true" selection-start-line="951" selection-start-column="5" selection-end-line="951" selection-end-column="5" />
+          <folding>
+            <element signature="e#1335#4802#0" expanded="false" />
+            <element signature="e#6235#6718#0" expanded="false" />
+            <element signature="e#8417#9659#0" expanded="false" />
+            <element signature="e#9726#10663#0" expanded="false" />
+            <element signature="e#10770#11147#0" expanded="false" />
+            <element signature="e#11233#11571#0" expanded="false" />
+            <element signature="e#11653#11982#0" expanded="false" />
+            <element signature="e#12031#12334#0" expanded="false" />
+            <element signature="e#12379#12576#0" expanded="false" />
+            <element signature="e#12751#13273#0" expanded="false" />
+            <element signature="e#13353#13889#0" expanded="false" />
+            <element signature="e#13979#14544#0" expanded="false" />
+            <element signature="e#15274#15628#0" expanded="false" />
+            <element signature="e#15742#16122#0" expanded="false" />
+            <element signature="e#16219#16573#0" expanded="false" />
+            <element signature="e#16679#16895#0" expanded="false" />
+            <element signature="e#16933#17002#0" expanded="false" />
+            <element signature="e#17060#17383#0" expanded="false" />
+            <element signature="e#17455#17951#0" expanded="false" />
+            <element signature="e#18352#19512#0" expanded="false" />
+            <element signature="e#18462#19504#0" expanded="false" />
+            <element signature="e#20301#22433#0" expanded="false" />
+            <element signature="e#22685#22837#0" expanded="false" />
+            <element signature="e#22918#24262#0" expanded="false" />
+            <element signature="e#24404#24985#0" expanded="false" />
+            <element signature="e#25107#29252#0" expanded="false" />
+            <element signature="e#25935#27453#0" expanded="false" />
+            <element signature="e#29301#29821#0" expanded="false" />
+            <element signature="e#29875#30797#0" expanded="false" />
+            <element signature="e#30852#32529#0" expanded="false" />
+            <element signature="e#32626#33078#0" expanded="false" />
+            <element signature="e#33173#33611#0" expanded="false" />
+            <element signature="e#33665#34014#0" expanded="false" />
+            <element signature="e#34106#34531#0" expanded="false" />
+            <element signature="e#34621#35032#0" expanded="false" />
+            <element signature="e#35127#35559#0" expanded="false" />
+            <element signature="e#35656#36081#0" expanded="false" />
+            <element signature="e#36163#37141#0" expanded="false" />
+            <element signature="e#37187#37397#0" expanded="false" />
+            <element signature="e#37463#37921#0" expanded="false" />
+            <element signature="e#37971#38641#0" expanded="false" />
+            <element signature="e#38707#39238#0" expanded="false" />
+            <element signature="e#39303#40635#0" expanded="false" />
+            <element signature="e#40721#41602#0" expanded="false" />
+            <element signature="e#41645#42044#0" expanded="false" />
+            <element signature="e#42201#45520#0" expanded="false" />
+            <element signature="e#45577#47533#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1734">
+          <caret line="102" column="19" lean-forward="true" selection-start-line="102" selection-start-column="19" selection-end-line="102" selection-end-column="19" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#5517#5592#0" expanded="false" />
+            <element signature="e#5680#6218#0" expanded="false" />
+            <element signature="e#6575#7992#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8364">
+          <caret line="492" column="19" lean-forward="true" selection-start-line="492" selection-start-column="19" selection-end-line="492" selection-end-column="19" />
+          <folding>
+            <element signature="e#1335#4802#0" expanded="false" />
+            <element signature="e#6235#6718#0" expanded="false" />
+            <element signature="e#8417#9659#0" expanded="false" />
+            <element signature="e#9726#10663#0" expanded="false" />
+            <element signature="e#10770#11147#0" expanded="false" />
+            <element signature="e#11233#11571#0" expanded="false" />
+            <element signature="e#11653#11982#0" expanded="false" />
+            <element signature="e#12031#12334#0" expanded="false" />
+            <element signature="e#12379#12576#0" expanded="false" />
+            <element signature="e#12751#13273#0" expanded="false" />
+            <element signature="e#13353#13889#0" expanded="false" />
+            <element signature="e#13979#14544#0" expanded="false" />
+            <element signature="e#15274#15628#0" expanded="false" />
+            <element signature="e#15742#16122#0" expanded="false" />
+            <element signature="e#16219#16573#0" expanded="false" />
+            <element signature="e#16679#16895#0" expanded="false" />
+            <element signature="e#16933#17002#0" expanded="false" />
+            <element signature="e#17060#17383#0" expanded="false" />
+            <element signature="e#17455#17951#0" expanded="false" />
+            <element signature="e#18352#19512#0" expanded="false" />
+            <element signature="e#18462#19504#0" expanded="false" />
+            <element signature="e#20301#22433#0" expanded="false" />
+            <element signature="e#22685#22837#0" expanded="false" />
+            <element signature="e#22918#24262#0" expanded="false" />
+            <element signature="e#24404#24985#0" expanded="false" />
+            <element signature="e#25107#29252#0" expanded="false" />
+            <element signature="e#25935#27453#0" expanded="false" />
+            <element signature="e#29301#29821#0" expanded="false" />
+            <element signature="e#29875#30797#0" expanded="false" />
+            <element signature="e#30852#32529#0" expanded="false" />
+            <element signature="e#32626#33078#0" expanded="false" />
+            <element signature="e#33173#33611#0" expanded="false" />
+            <element signature="e#33665#34014#0" expanded="false" />
+            <element signature="e#34106#34531#0" expanded="false" />
+            <element signature="e#34621#35032#0" expanded="false" />
+            <element signature="e#35127#35559#0" expanded="false" />
+            <element signature="e#35656#36081#0" expanded="false" />
+            <element signature="e#36163#37141#0" expanded="false" />
+            <element signature="e#37187#37397#0" expanded="false" />
+            <element signature="e#37463#37921#0" expanded="false" />
+            <element signature="e#37971#38641#0" expanded="false" />
+            <element signature="e#38707#39238#0" expanded="false" />
+            <element signature="e#39303#40635#0" expanded="false" />
+            <element signature="e#40721#41602#0" expanded="false" />
+            <element signature="e#41645#42044#0" expanded="false" />
+            <element signature="e#42201#45520#0" expanded="false" />
+            <element signature="e#45577#47533#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="7" lean-forward="true" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3655">
+          <caret line="215" column="53" lean-forward="true" selection-start-line="215" selection-start-column="53" selection-end-line="215" selection-end-column="53" />
+          <folding>
+            <element signature="e#1335#4802#0" expanded="false" />
+            <element signature="e#6235#6718#0" expanded="false" />
+            <element signature="e#8417#9659#0" expanded="false" />
+            <element signature="e#9726#10663#0" expanded="false" />
+            <element signature="e#10770#11147#0" expanded="false" />
+            <element signature="e#11233#11571#0" expanded="false" />
+            <element signature="e#11653#11982#0" expanded="false" />
+            <element signature="e#12031#12334#0" expanded="false" />
+            <element signature="e#12379#12576#0" expanded="false" />
+            <element signature="e#12751#13273#0" expanded="false" />
+            <element signature="e#13353#13889#0" expanded="false" />
+            <element signature="e#13979#14544#0" expanded="false" />
+            <element signature="e#15274#15628#0" expanded="false" />
+            <element signature="e#15742#16122#0" expanded="false" />
+            <element signature="e#16219#16573#0" expanded="false" />
+            <element signature="e#16679#16895#0" expanded="false" />
+            <element signature="e#16933#17002#0" expanded="false" />
+            <element signature="e#17060#17383#0" expanded="false" />
+            <element signature="e#17455#17951#0" expanded="false" />
+            <element signature="e#18352#19512#0" expanded="false" />
+            <element signature="e#18462#19504#0" expanded="false" />
+            <element signature="e#20301#22433#0" expanded="false" />
+            <element signature="e#22685#22837#0" expanded="false" />
+            <element signature="e#22918#24262#0" expanded="false" />
+            <element signature="e#24404#24985#0" expanded="false" />
+            <element signature="e#25107#29252#0" expanded="false" />
+            <element signature="e#25935#27453#0" expanded="false" />
+            <element signature="e#29301#29821#0" expanded="false" />
+            <element signature="e#29875#30797#0" expanded="false" />
+            <element signature="e#30852#32529#0" expanded="false" />
+            <element signature="e#32626#33078#0" expanded="false" />
+            <element signature="e#33173#33611#0" expanded="false" />
+            <element signature="e#33665#34014#0" expanded="false" />
+            <element signature="e#34106#34531#0" expanded="false" />
+            <element signature="e#34621#35032#0" expanded="false" />
+            <element signature="e#35127#35559#0" expanded="false" />
+            <element signature="e#35656#36081#0" expanded="false" />
+            <element signature="e#36163#37141#0" expanded="false" />
+            <element signature="e#37187#37397#0" expanded="false" />
+            <element signature="e#37463#37921#0" expanded="false" />
+            <element signature="e#37971#38641#0" expanded="false" />
+            <element signature="e#38707#39238#0" expanded="false" />
+            <element signature="e#39303#40635#0" expanded="false" />
+            <element signature="e#40721#41602#0" expanded="false" />
+            <element signature="e#41645#42044#0" expanded="false" />
+            <element signature="e#42201#45520#0" expanded="false" />
+            <element signature="e#45577#47533#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="73" column="25" lean-forward="true" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#5517#5592#0" expanded="false" />
+            <element signature="e#5680#6218#0" expanded="false" />
+            <element signature="e#6575#7992#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/testGradient.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -326,13 +870,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18989">
-          <caret line="1130" column="80" lean-forward="false" selection-start-line="1130" selection-start-column="80" selection-end-line="1130" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TestAMap.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
@@ -340,98 +877,110 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/国家与地区SOC.txt" />
+    <entry file="file://$PROJECT_DIR$/yinuo.html" />
+    <entry file="file://$PROJECT_DIR$/qrcode.html" />
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124848">
-          <caret line="7357" column="32" lean-forward="false" selection-start-line="7357" selection-start-column="27" selection-end-line="7357" selection-end-column="32" />
+        <state relative-caret-position="7">
+          <caret line="3056" column="7" lean-forward="true" selection-start-line="3056" selection-start-column="7" selection-end-line="3056" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="346" column="8" lean-forward="true" selection-start-line="346" selection-start-column="8" selection-end-line="346" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ToolStripDropdownList.js" />
+    <entry file="file://$PROJECT_DIR$/Map.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1122">
+          <caret line="66" column="1" lean-forward="false" selection-start-line="66" selection-start-column="1" selection-end-line="66" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/国家与地区SOC.txt">
+    <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10834">
-          <caret line="1141" column="12" lean-forward="false" selection-start-line="1141" selection-start-column="12" selection-end-line="1141" selection-end-column="12" />
+        <state relative-caret-position="0">
+          <caret line="0" column="9" lean-forward="true" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="81" column="0" lean-forward="true" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+        <state relative-caret-position="2448">
+          <caret line="144" column="12" lean-forward="true" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#3629#4167#0" expanded="false" />
+            <element signature="e#5517#5592#0" expanded="false" />
+            <element signature="e#5680#6218#0" expanded="false" />
+            <element signature="e#6575#7992#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Map.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="484" column="35" lean-forward="false" selection-start-line="484" selection-start-column="31" selection-end-line="484" selection-end-column="35" />
+        <state relative-caret-position="323">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
-            <element signature="e#3579#3626#0" expanded="false" />
-            <element signature="e#5967#7127#0" expanded="false" />
-            <element signature="e#7316#8556#0" expanded="false" />
-            <element signature="e#8623#9560#0" expanded="false" />
-            <element signature="e#9691#10025#0" expanded="false" />
-            <element signature="e#10110#10403#0" expanded="false" />
-            <element signature="e#10484#10769#0" expanded="false" />
-            <element signature="e#10818#11005#0" expanded="false" />
-            <element signature="e#11050#11238#0" expanded="false" />
-            <element signature="e#11414#11853#0" expanded="false" />
-            <element signature="e#11934#12385#0" expanded="false" />
-            <element signature="e#12476#12951#0" expanded="false" />
-            <element signature="e#13036#13494#0" expanded="false" />
-            <element signature="e#13596#13932#0" expanded="false" />
-            <element signature="e#14046#14402#0" expanded="false" />
-            <element signature="e#14499#14835#0" expanded="false" />
-            <element signature="e#15289#15612#0" expanded="false" />
-            <element signature="e#15684#16180#0" expanded="false" />
-            <element signature="e#16581#17741#0" expanded="false" />
-            <element signature="e#17943#18886#0" expanded="false" />
-            <element signature="e#22317#24449#0" expanded="false" />
-            <element signature="e#24705#24857#0" expanded="false" />
-            <element signature="e#24938#26282#0" expanded="false" />
-            <element signature="e#26333#26370#0" expanded="false" />
-            <element signature="e#26424#27005#0" expanded="false" />
-            <element signature="e#27063#29542#0" expanded="false" />
-            <element signature="e#30327#31246#0" expanded="false" />
-            <element signature="e#31301#32977#0" expanded="false" />
-            <element signature="e#33030#33379#0" expanded="false" />
-            <element signature="e#33457#34251#0" expanded="false" />
-            <element signature="e#34321#34852#0" expanded="false" />
-            <element signature="e#34918#35376#0" expanded="false" />
-            <element signature="e#35426#36096#0" expanded="false" />
-            <element signature="e#36162#36693#0" expanded="false" />
-            <element signature="e#36758#38090#0" expanded="false" />
-            <element signature="e#38176#39057#0" expanded="false" />
-            <element signature="e#40646#41547#0" expanded="false" />
-            <marker date="1561440856364" expanded="true" signature="39808:39819" ph="..." />
-            <marker date="1561440856364" expanded="true" signature="39920:39944" ph="..." />
+            <element signature="e#1335#4802#0" expanded="false" />
+            <element signature="e#6235#6718#0" expanded="false" />
+            <element signature="e#8417#9659#0" expanded="false" />
+            <element signature="e#9726#10663#0" expanded="false" />
+            <element signature="e#10770#11147#0" expanded="false" />
+            <element signature="e#11233#11571#0" expanded="false" />
+            <element signature="e#11653#11982#0" expanded="false" />
+            <element signature="e#12031#12334#0" expanded="false" />
+            <element signature="e#12379#12576#0" expanded="false" />
+            <element signature="e#12751#13273#0" expanded="false" />
+            <element signature="e#13353#13889#0" expanded="false" />
+            <element signature="e#13979#14544#0" expanded="false" />
+            <element signature="e#15274#15628#0" expanded="false" />
+            <element signature="e#15742#16122#0" expanded="false" />
+            <element signature="e#16219#16573#0" expanded="false" />
+            <element signature="e#16679#16895#0" expanded="false" />
+            <element signature="e#16933#17002#0" expanded="false" />
+            <element signature="e#17060#17383#0" expanded="false" />
+            <element signature="e#17455#17951#0" expanded="false" />
+            <element signature="e#18352#19512#0" expanded="false" />
+            <element signature="e#18462#19504#0" expanded="false" />
+            <element signature="e#20301#22433#0" expanded="false" />
+            <element signature="e#22685#22837#0" expanded="false" />
+            <element signature="e#22918#24262#0" expanded="false" />
+            <element signature="e#24404#24985#0" expanded="false" />
+            <element signature="e#25107#29252#0" expanded="false" />
+            <element signature="e#25935#27453#0" expanded="false" />
+            <element signature="e#29301#29821#0" expanded="false" />
+            <element signature="e#29875#30797#0" expanded="false" />
+            <element signature="e#30852#32529#0" expanded="false" />
+            <element signature="e#32626#33078#0" expanded="false" />
+            <element signature="e#33173#33611#0" expanded="false" />
+            <element signature="e#33665#34014#0" expanded="false" />
+            <element signature="e#34106#34531#0" expanded="false" />
+            <element signature="e#34621#35032#0" expanded="false" />
+            <element signature="e#35127#35559#0" expanded="false" />
+            <element signature="e#35656#36081#0" expanded="false" />
+            <element signature="e#36163#37141#0" expanded="false" />
+            <element signature="e#37187#37397#0" expanded="false" />
+            <element signature="e#37463#37921#0" expanded="false" />
+            <element signature="e#37971#38641#0" expanded="false" />
+            <element signature="e#38707#39238#0" expanded="false" />
+            <element signature="e#39303#40635#0" expanded="false" />
+            <element signature="e#40721#41602#0" expanded="false" />
+            <element signature="e#41645#42044#0" expanded="false" />
+            <element signature="e#42201#45520#0" expanded="false" />
+            <element signature="e#45577#47533#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MapDesigner.scrp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="33" lean-forward="true" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
