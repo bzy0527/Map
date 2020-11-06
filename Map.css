@@ -1,4 +1,3 @@
-
 .Map {
     /*display: block;*/
     border: 1px solid gray;
@@ -6,7 +5,12 @@
     width: 200px;
     height: 400px;
 }
-
+.MapContainer{
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
 .MapView {
     /*display:block;*/
     width: 100%;
@@ -22,21 +26,23 @@
     top: 30px;
     /*background-color: #ffaa30;*/
     /*z-index: 20;*/
-    overflow:auto;
-
+    overflow: auto;
 }
 
 /*设置标记Label*/
-.amap-marker-label{
+.amap-marker-label {
     border: 1px solid rgba(61, 87, 255, 0.18);
     background-color: rgba(176, 196, 222, 0.27);
 }
 
-.amap-marker-label .MapUserMarkerLabel{
-
+.amap-marker-label .MapUserMarkerLabel {
 }
 
-.Map .MapPOIList{
+a.poi-more{
+    display:none!important;
+}
+
+.Map .MapPOIList {
     position: absolute;
     background-color: white;
     max-height: 70%;
@@ -47,15 +53,16 @@
     /*border-bottom: solid 1px silver;*/
 }
 
-.MapTool{
+
+
+.MapTool {
     position: absolute;
-    width: 50%;
-    height: 40px;
-    background-color: rgba(66, 68, 240, 0.4);
+    /*width: 50%;*/
+    height: 45px;
+    background-color: #fff;
     top: 30px;
     left: 50%;
     transform: translate(-50%,0);
-
     box-sizing: border-box;
     display: flex; /* IE10 */
     display: flexbox; /* IE10 */
@@ -63,51 +70,138 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 5px;
+    visibility: hidden;
+}
+.MapTool[ShowTools=yes]{
+    visibility: visible;
+}
+.MapTool[ShowTools=no]{
+    visibility: hidden;
+}
+.MapTool[showSearchBarOnly=yes]{
+    visibility: visible;
+}
+.MapTool[showSearchBarOnly=yes] .MapMarkBtn{
+    display: none;
+}
+.MapTool[showSearchBarOnly=yes] select{
+    display: none;
+}
+.MapTool[showSearchBarOnly=yes] .MapSearchModule{
+    border: none;
 }
 
-.MapSearchInput{
+.MapSearchModule{
+    display: inline-flex;
+    height: 100%;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    /*z-index: 2201;*/
+    width: 360px;
+    height: 40px;
+    background: #fff;
+    box-shadow: 0 2px 2px rgba(0,0,0,.15);
+    border-radius: 5px;
+    margin: 0 8px;
+    border: 1px solid #b2b5b6;
+}
+
+.MapUserLogo{
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 8px;
+    width: 34px;
+    height: 34px;
+    /*z-index: 99999;*/
+    cursor: pointer;
+}
+.MapSearchInput {
     display: inline-block;
-    height: 60%;
-    width: 35%;
-    border: none;
     outline: none;
     font-size: 12px;
     color: black;
-    /*border-radius: 5px;*/
+    position: absolute;
+    top: 12.5px;
+    left: 50px;
+    box-sizing: border-box;
+    text-indent: 2px;
+    /*z-index: 2200;*/
+    border: none;
+    width: 219px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0;
+    letter-spacing: .5px;
+    font-size: 14px;
 }
 
-.MapMarkBtn{
+.MapSearchBtn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    /*z-index: 9308;*/
+    box-sizing: border-box;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.MapMarkBtn {
     /*width: 10%;*/
     display: inline-block;
-    height: 24px;
-    color: green;
-    font-size: 12px;
+    height: 30px;
+    color: #318ee1;
+    font-size: 14px;
     background-color: rgba(255, 255, 255, 0.76);
     text-align: center;
     cursor: pointer;
-    line-height: 24px;
+    line-height: 30px;
     padding: 2px;
+    width: 80px;
+    margin: 0 8px;
     border-radius: 5px;
-    border: 1px solid #818485;
+    border: 1px solid #b2b5b6;
 
 }
 
-.MapRouteSelect{
+.MapRouteSelect {
     display: inline-block;
-    width: 25%;
-    height: 70%;
+    width: 80px;
+    height: 36px;
     color: #3d57ff;
     outline: none;
+    padding: 2px;
+    margin: 0 8px;
+    border-radius: 5px;
     border-color: #3d57ff;
-
 }
 
-.MapRouteSelectDisabled{
+.MapRouteSelectDisabled {
     display: inline-block;
-    width: 25%;
-    height: 70%;
+    width: 80px;
+    height: 36px;
     color: #858889;
     outline: none;
-    border-color: #858889;
+    padding: 2px;
+    margin: 0 8px;
+    border-radius: 5px;
+    border-color: #b2b5b6;
+}
+
+@media screen and (max-width: 500px) {
+    .MapTool{
+
+        width: 90%;
+        flex-wrap: wrap;
+        height: 90px;
+    }
+    .MapTool[showSearchBarOnly=yes]{
+        visibility: visible;
+        height: 45px;
+    }
 }

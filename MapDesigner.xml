@@ -48,13 +48,6 @@
            <c T="wc:TextBox" Display="block" Height="26px" Margin="2px 14px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;Zoom&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}" />
 
             <c T="wc:BreakLine" BackgroundColor="lightgray" Height="1px" Margin="4px 2px 4px 2px"/>
-            <c T="wc:CheckedBox" Text="定位当前位置" Margin="3px 2px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;AllowGeolocation&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
-            <c T="wc:CheckedBox" Text="位置标记" Margin="3px 2px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;AllowMarkPos&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
-
-            <c T="wc:BreakLine" BackgroundColor="lightgray" Height="1px" Margin="4px 2px 4px 2px"/>
-            <c T="wc:CheckedBox" Text="标记模式" Margin="3px 2px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;SignMode&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
-
-            <c T="wc:BreakLine" BackgroundColor="lightgray" Height="1px" Margin="4px 2px 4px 2px"/>
             <c T="wc:CheckedBox" Text="工具栏 " Margin="3px 2px 2px 16px" DataBindings="{&quot;Path&quot;:&quot;ShowTools&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
             <c T="wc:CheckedBox" Text="区域面 " Margin="3px 2px 2px 4px" DataBindings="{&quot;Path&quot;:&quot;ShowBG&quot;,&quot;Mode&quot;:&quot;OneWay&quot;,&quot;Source&quot;:&quot;&quot;}"/>
 

@@ -36,29 +36,39 @@ DBFX.Web.Controls.Map = function () {
     //高德地图
     map.aMap = new Object();
 
+    //地图是否加载完成
+    map.HasLoaded = false;
+
     map.routes = ["驾车路线","步行路线","公交路线","货车路线"];
 
     //通过正则表达式判断是否为手机端运行
     map.isPhone = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
     console.log("是否为手机端"+map.isPhone);
 
-
     map.OnCreateHandle();
     map.OnCreateHandle = function () {
-        map.VisualElement.innerHTML = "<div class=\"MapView\" id='MapView'/></div><div class='MapInfoPanel' id='MapInfoPanel'><div id='map123'></div></div>"+
+        map.VisualElement.innerHTML = "<div class='MapContainer'><div class=\"MapView\" id='MapView'/></div><div class='MapInfoPanel' id='MapInfoPanel'><div id='map123'></div></div>"+
             "<div class='MapPOIList'></div>"+
-        "<div class='MapTool'><input type='text' id='MapSearchInput' class='MapSearchInput'><span class='MapMarkBtn'>标记位置</span><select name='路线选择' class='MapRouteSelect'><option value =\"5\">路线选择</option></select></div>";
+        "<div class='MapTool'>" +
+            "<div class='MapSearchModule'><img class='MapUserLogo' draggable='false'><input type='text' id='MapSearchInput' class='MapSearchInput'><span class='MapSearchBtn'>搜索</span></div>" +
+            "<span class='MapMarkBtn'>标记位置</span><select name='路线选择' class='MapRouteSelect'><option value =\"5\">路线选择</option></select></div></div>";
         map.MapDiv = map.VisualElement.querySelector("div.MapView");
         map.MapInfoPanel = map.VisualElement.querySelector("div.MapInfoPanel");
         map.MapSearchInput = map.VisualElement.querySelector("input.MapSearchInput");
 
+        map.UserLogo = map.VisualElement.querySelector("img.MapUserLogo");
+        map.UserLogo.src = "https://wfs.dbazure.cn/root//AppData/af18cdfd5dd14888bafa9d86f5352a88//efcdca8b871e4987aef1abe171041f08.png";
         //定位搜索工具栏
         map.MapTool = map.VisualElement.querySelector("div.MapTool");
-
         map.MapPOIList = map.VisualElement.querySelector("div.MapPOIList");
-
-
         map.MapSearchInput.placeholder = "搜索地址";
+        map.SearchButton = map.VisualElement.querySelector("span.MapSearchBtn");
+        //搜索按钮点击
+        map.SearchButton.onclick = function(e){
+            var kw = map.MapSearchInput.value;
+            console.log(kw);
+            map.SearchPlace(kw);
+        }
 
         //"标记"按钮
         map.MapMarkBtn = map.VisualElement.querySelector("span.MapMarkBtn");
@@ -86,8 +96,8 @@ DBFX.Web.Controls.Map = function () {
         //TODO:动态插入script  异步加载高德地图 callback=map.LoadMap!!
         var mapJS = document.createElement("SCRIPT");
         mapJS.charset = "utf-8";
-        //AMap.ToolBar,AMap.Scale,AMap.OverView,AMap.MapType
-        mapJS.src = "https://webapi.amap.com/maps?v=1.4.11&key=501c9ef49f34ed644919c827c3d98b98&callback="+map.CbName+"&plugin=AMap.DistrictLayer,AMap.ToolBar,AMap.Scale,AMap.OverView,AMap.MapType";
+        //AMap.ToolBar,AMap.Scale,AMap.OverView,AMap.MapType  1.4.11  1.4.15
+        mapJS.src = "https://webapi.amap.com/maps?v=1.4.15&key=501c9ef49f34ed644919c827c3d98b98&callback="+map.CbName+"&plugin=AMap.DistrictLayer,AMap.ToolBar,AMap.Scale,AMap.OverView,AMap.MapType";
         mapJS.type = 'text/javascript';
         document.body.appendChild(mapJS);
 
@@ -119,6 +129,20 @@ DBFX.Web.Controls.Map = function () {
             console.log("用户不允许获取当前位置信息");
         }
     }
+
+    //TODO:20201103---标注模式
+    //标注模式时，不显示标记按钮和路径规划，点击地图时直接标记地点
+    map.signMode = false;
+    Object.defineProperty(map,"SignMode",{
+        get:function () {
+            return map.signMode;
+        },
+        set:function (v) {
+            v=(v==true||v=="true");
+            map.signMode = v;
+            map.MapMarkBtn.style.display = v?"none":"inline-block";
+        }
+    });
 
     //TODO:地图类型： 普通交通地图、简易世界地图、简易中国地图、简易外国地图、简易省图
     map.mapStyle = "default";
@@ -172,19 +196,21 @@ DBFX.Web.Controls.Map = function () {
     //TODO:绘制默认的交通地图 当前定位地点为中心点
     map.DrawDefaultMap = function () {
         map.aMap.setFeatures(map.Features);
+
         //获取城市信息
         map.aMap.getCity(function (result) {
 
             console.log("为Autocomplete设置城市代码");
             // console.log(result);
-
+            // map.Zoom = map.zoom;
             map.City = result;
 
             map.autoComplete && map.autoComplete.setCity(result.citycode);
             map.transferRoute && map.transferRoute.setCity(result.citycode);
             map.aMap.setCity(result.citycode);
+            // map.Zoom = map.zoom;
         });
-        map.aMap.add(map.currentMarker);
+        map.currentMarker && map.aMap.add(map.currentMarker);
     }
 
     //简易行政区图的配置项
@@ -280,6 +306,7 @@ DBFX.Web.Controls.Map = function () {
         // map.aMap.add([map.disProvince]);
         map.disProvince.setMap(map.aMap);
         map.aMap.setCity(adcode+"");
+        map.aMap.setFitView();
         // map.setMapZoom(2);
     }
 
@@ -318,6 +345,80 @@ DBFX.Web.Controls.Map = function () {
     }
 
 
+    //网络访问请求方法
+    map._ajax =  function (url, option, callback) {
+        var defaultOption = {
+            method: 'GET',
+            dataType: 'JSON'
+        };
+
+        if (typeof option === 'function') {
+            callback = option;
+            option = defaultOption;
+        } else {
+            for (var key in defaultOption) {
+                if (defaultOption.hasOwnProperty(key) && option[key] === undefined) {
+                    option[key] = defaultOption[key];
+                }
+            }
+        }
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304 || (xhr.status == 0)) {
+                    var response = xhr.responseText;
+
+                    if (option.dataType === 'JSON') {
+                        try {
+                            response = JSON.parse(response);
+                        } catch (err) {
+                            return callback(err);
+                        }
+
+                        callback(null, response);
+                    } else {
+                        callback(new Error(url + ' request failed'));
+                    }
+                }
+            }
+        }
+        xhr.open(option.method || 'GET', url);
+        xhr.send();
+    }
+
+    //加载geoJSon图层
+    map.LoadGeoJson = function(url,cb){
+        map._ajax(url,function (err, geoJSON) {
+            if (!err) {
+                var geojson = new AMap.GeoJSON({
+                    geoJSON: geoJSON,
+                    // 还可以自定义getMarker和getPolyline
+                    getPolygon: function (geojson, lnglats) {
+                        // 计算面积
+                        var area = AMap.GeometryUtil.ringArea(lnglats[0]);
+
+                        return new AMap.Polygon({
+                            path: lnglats,
+                            fillOpacity: 1 - Math.sqrt(area / 8000000000),// 面积越大透明度越高
+                            strokeColor: 'white',
+                            fillColor: 'rgba(7,169,237,0.43)',
+                            zIndex:2
+                        });
+                    }
+                });
+                map.aMap.clearMap();
+                geojson.setMap(map.aMap);
+                map.aMap.setFitView();
+                console.log('GeoJSON 数据加载完成');
+            }else {
+                cb && cb(err);
+            }
+
+        });
+    }
+
     //TODO:搜索工具图层显示设置
     //是否显示工具栏
     map.showTools = true;
@@ -329,10 +430,29 @@ DBFX.Web.Controls.Map = function () {
 
             if(v == true || v == "true"){
                 map.showTools = true;
-                map.MapTool.style.visibility = "";
+                map.MapTool.setAttribute("ShowTools","yes");
             }else {
                 map.showTools = false;
-                map.MapTool.style.visibility = "hidden";
+                map.MapTool.setAttribute("ShowTools","no");
+            }
+        }
+    });
+
+    map.showSearchBarOnly = false;
+    Object.defineProperty(map,"ShowSearchBarOnly",{
+        get:function () {
+            return map.showSearchBarOnly;
+        },
+        set:function (v) {
+
+            if(v == true || v == "true"){
+                map.showSearchBarOnly = true;
+
+                map.MapTool.setAttribute("showSearchBarOnly","yes");
+            }else {
+                map.showSearchBarOnly = false;
+                map.MapTool.removeAttribute("showSearchBarOnly");
+
             }
         }
     });
@@ -413,6 +533,7 @@ DBFX.Web.Controls.Map = function () {
                 map.aMap.setFeatures(map.Features);
         }
     });
+
     //显示道路
     map.showRoad = true;
     Object.defineProperty(map,"ShowRoad",{
@@ -452,7 +573,7 @@ DBFX.Web.Controls.Map = function () {
         }
     });
 
-    //显示建标注
+    //显示标注
     map.showPoint = true;
     Object.defineProperty(map,"ShowPoint",{
         get:function () {
@@ -540,7 +661,7 @@ DBFX.Web.Controls.Map = function () {
     }
 
 
-    //加载百度地图  平台不能使用!!!
+    //FIXME:加载百度地图  平台不能使用!!!
     map.BLoadMap = function () {
         delete window[map.CbName];
         delete Object.prototype.OnPropertyChanged;
@@ -559,7 +680,6 @@ DBFX.Web.Controls.Map = function () {
         //SCE:点击兴趣点搜索结果列表中某一个地点时 返回该地点信息
         map.POIItemInfo = SCE.data;
         console.log(map.POIItemInfo);
-
 
         if(map.POIListItemClick != undefined && map.POIListItemClick.GetType() == "Command"){
             map.POIListItemClick.Sender = map;
@@ -589,39 +709,110 @@ DBFX.Web.Controls.Map = function () {
         //取值范围0-50000
         radius:200
     }*/
-    map.PlaceSearchNearBy = function (config) {
+
+    map.PlaceSearch = undefined;
+    map.PlaceSearchNearBy = function (config,keyword) {
 
 
-        if(!config){
+        if(typeof config != "object"){
             return;
         }
+
+        var panel = config.panel;
+        if(panel && panel.VisualElement){
+            panel = panel.VisualElement;
+        }else {
+            panel = map.MapPOIList;
+        }
+
 
         AMap.service(["AMap.PlaceSearch"], function() {
 
             //构造地点查询类
             var placeSearch = new AMap.PlaceSearch({
                 type: config.type || "", // 兴趣点类别
-                pageSize: config.pageSize || 5, // 单页显示结果条数
-                pageIndex: config.pageIndex || 1, // 页码
+                pageSize: config.pageSize || 5, // 单页显示结果条数 取值范围1-50，超出取值范围按最大值返回
+                pageIndex: config.pageIndex || 1, // 页码 取值范围1-100，超多实际页数不返回poi
                 city: config.city || map.City.citycode, // 兴趣点城市  默认为地图当前定位城市
                 // citylimit: true,  //是否强制限制在设置的城市内搜索
                 map: map.aMap, // 展现结果的地图实例
-                panel: map.MapPOIList, // 结果列表将在此容器中进行展示。
+                panel: panel, // 结果列表将在此容器中进行展示。
                 autoFitView: true // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
             });
 
             var cpoint = config.cpoint; //中心点坐标
-            placeSearch.searchNearBy('', cpoint, config.radius||2000, function(status, result) {
-                    console.log("兴趣点搜索结果状态"+status);
-                    console.log(result);
-            });
+
+            if(keyword){
+                //通过关键词进行搜索
+                placeSearch.search(keyword,function (status,result) {
+                    switch (status) {
+                        case "complete":
+                            map.SearchResults = result["poiList"]["pois"];
+                            break;
+                        case "error":
+                        case "no_data":
+                        default:
+                            map.SearchResults = [];
+                            break;
+                    }
+                    map.OnPlaceSearchCompleted();
+                });
+            }else {
+                //根据中心点经纬度、半径以及关键字进行周边查询
+                placeSearch.searchNearBy('', cpoint, config.radius||2000, function(status, result) {
+
+                        switch (status) {
+                            case "complete":
+                                map.SearchResults = result["poiList"]["pois"];
+                                break;
+                            case "error":
+                            case "no_data":
+                            default:
+                                map.SearchResults = [];
+                                break;
+                        }
+                    map.OnPlaceSearchCompleted();
+                });
+            }
+
 
             //SCE:SelectChangeEvent对象
             placeSearch.on("listElementClick",function (SCE) {
                 //SCE:点击兴趣点搜索结果列表中某一个地点时 返回该地点信息
                 map.OnPOIListItemClick(SCE);
+                var itemData = SCE["data"];
+                //选中的搜索结果对象
+                map.SearchResult = itemData;
+                map.SearchResult.district = (itemData["pname"] || "") +(itemData["cityname"] || "")+(itemData["adname"] || "");
+
+                //TODO：20191018 添加地图搜索结果选中完成事件
+                if (map.SearchResultSelect != undefined) {
+                    if (map.SearchResultSelect.GetType != undefined && map.SearchResultSelect.GetType() == "Command") {
+                        map.SearchResultSelect.Sender = map;
+                        map.SearchResultSelect.Execute();
+                    }
+                    if (typeof (map.SearchResultSelect) == "function")
+                        map.SearchResultSelect(map.SearchResult);
+                }
             });
+
+            map.PlaceSearch = placeSearch;
         });
+    }
+
+    //搜索完成时
+    //搜索的结果集合
+    map.SearchResults = [];
+    map.OnPlaceSearchCompleted = function(){
+        console.log(map.SearchResults);
+        if (map.PlaceSearchCompleted != undefined) {
+            if (map.PlaceSearchCompleted.GetType != undefined && map.PlaceSearchCompleted.GetType() == "Command") {
+                map.PlaceSearchCompleted.Sender = map;
+                map.PlaceSearchCompleted.Execute();
+            }
+            if (typeof (map.PlaceSearchCompleted) == "function")
+                map.PlaceSearchCompleted(map.SearchResults);
+        }
     }
 
 
@@ -728,27 +919,50 @@ DBFX.Web.Controls.Map = function () {
     }
 
 
-    //是否允许用户标记自己位置 获取位置信息 默认允许"yes",不允许为"no";
-    map.allowMarkPos = "yes";
+    //是否允许用户标记自己位置 获取位置信息 默认允许true,不允许为false;
+    map.allowMarkPos = true;
     Object.defineProperty(map,"AllowMarkPos",{
         get:function () {
             return map.allowMarkPos;
         },
         set:function (v) {
+            v=(v==true||v=="true");
             map.allowMarkPos = v;
+            map.MapMarkBtn.style.display = v?"inline-block":"none";
         }
     });
 
 
+    //是否定位当前位置信息
+    map.allowGeolocation = true;
+    Object.defineProperty(map,"AllowGeolocation",{
+        get:function () {
+            return map.allowGeolocation;
+        },
+        set:function (v) {
+            v=(v==true||v=="true");
+            map.allowGeolocation = v;
+        }
+    })
+
     //标记按钮点击
     map.isMarking = false;
+    //标记位置按钮点击
     map.MarkBtnClick = function (e) {
         e.cancelBubble = true;
         console.log("标记按钮点击"+map.clickListener);
+        /**
+         * 方案2：点击标记按钮标记，标记时及时获取标记的位置
+         */
 
+        map.clickListener = AMap.event.addListener(map.aMap,"click",map.OnMapClick);
+
+
+        //方案1：点击按钮时开始标记，再次点击按钮时结束标记。（暂废弃）
+        return;
         if(!map.isMarking){
+            //
             map.clickListener = AMap.event.addListener(map.aMap,"click",map.OnMapClick);
-
 
 
             // map.mouseupListener = AMap.event.addListener(map.aMap,"mouseup",map.OnMapMouseup);
@@ -761,7 +975,92 @@ DBFX.Web.Controls.Map = function () {
 
             //设置用户标记的位置
             map.MarkPosition = map.userMarker.getPosition();
-            console.log(map.MarkPosition);
+
+            map.Geocoder.getAddress([map.MarkPosition.lng,map.MarkPosition.lat],function (status,result) {
+                console.log(status);
+                if(status == "complete"){
+
+                    map.MarkPosition.address = result.regeocode.formattedAddress;
+                    map.MarkPosition.addressInfo = result.regeocode.addressComponent;
+                    // console.log(map.MarkPosition);
+                }
+
+                if (map.Command != undefined && map.Command != null) {
+                    map.Command.Sender = map;
+                    map.Command.Execute();
+                }
+
+                if(map.MarkedPosition != undefined && map.MarkedPosition.GetType() == "Command"){
+                    map.MarkedPosition.Sender = map;
+                    map.MarkedPosition.Execute();
+                }
+
+                if(map.MarkedPosition != undefined && map.MarkedPosition.GetType() == "function"){
+                    map.MarkedPosition(e,map);
+                }
+
+            });
+
+        }
+
+        // map.isMarking = !map.isMarking;
+        map.MapMarkBtn.innerText = map.isMarking==true ? "结束标记":"标记位置";
+    }
+
+    //地图点击结束
+    map.OnMapMouseup = function (e) {
+        console.log("点击结束");
+    }
+
+    //TODO:地图点击事件
+    map.OnMapClick = function (e) {
+
+        map.isMarking = false;
+        // map.MapMarkBtn.innerText = "结束标记";
+        //点击地图获取经纬度信息
+        var lng = e.lnglat.lng;
+        var lat = e.lnglat.lat;
+        console.log(lng+"====="+lat);
+
+        //标记模式时
+        if(map.SignMode){
+            map.currentMarker.setPosition(new AMap.LngLat(lng,lat));
+            map.currentMarker.label = "您标记的位置";
+            map.currentMarker.setLabel({
+                //修改label相对于maker的位置
+                offset: new AMap.Pixel(20, 20),
+                // // 设置label标签
+                // label默认蓝框白底左上角显示，样式className为：amap-marker-label
+                content: "<div class='info'><span class='MapUserMarkerLabel'>您标记的位置</span></div>"
+            });
+            //获取用户标记的位置
+            map.MarkPosition = map.currentMarker.getPosition();
+        }else {
+            map.aMap.add(map.userMarker);
+            map.userMarker.setPosition(new AMap.LngLat(lng,lat));
+            map.userMarker.label = "您标记的位置";
+            map.userMarker.setLabel({
+                //修改label相对于maker的位置
+                offset: new AMap.Pixel(20, 20),
+                // // 设置label标签
+                // label默认蓝框白底左上角显示，样式className为：amap-marker-label
+                content: "<div class='info'><span class='MapUserMarkerLabel'>您标记的位置</span></div>"
+            });
+            //获取用户标记的位置
+            map.MarkPosition = map.userMarker.getPosition();
+        }
+
+
+        map.Geocoder.getAddress([map.MarkPosition.lng,map.MarkPosition.lat],function (status,result) {
+            console.log(status);
+            if(status == "complete"){
+
+
+                map.MarkPosition.address = result.regeocode.formattedAddress;
+                map.MarkPosition.addressInfo = result.regeocode.addressComponent;
+                console.log(map.MarkPosition);
+
+            }
 
             if (map.Command != undefined && map.Command != null) {
                 map.Command.Sender = map;
@@ -776,36 +1075,8 @@ DBFX.Web.Controls.Map = function () {
             if(map.MarkedPosition != undefined && map.MarkedPosition.GetType() == "function"){
                 map.MarkedPosition(e,map);
             }
-        }
 
-
-        map.isMarking = !map.isMarking;
-        map.MapMarkBtn.innerText = map.isMarking==true ? "结束标记":"标记位置";
-    }
-
-    //地图点击结束
-    map.OnMapMouseup = function (e) {
-        console.log("点击结束");
-
-    }
-
-    //TODO:地图点击事件
-    map.OnMapClick = function (e) {
-        //点击地图获取经纬度信息
-        var lng = e.lnglat.lng;
-        var lat = e.lnglat.lat;
-        console.log(lng+"====="+lat);
-        map.aMap.add(map.userMarker);
-        map.userMarker.setPosition(new AMap.LngLat(lng,lat));
-        map.userMarker.label = "您标记的位置";
-        map.userMarker.setLabel({
-            //修改label相对于maker的位置
-            offset: new AMap.Pixel(20, 20),
-            // // 设置label标签
-            // label默认蓝框白底左上角显示，样式className为：amap-marker-label
-            content: "<div class='info'><span class='MapUserMarkerLabel'>您标记的位置</span></div>"
         });
-
     }
 
     //FIXME:设置标记 通过标记判断此方法执行过几次 然后执行相应的方法
@@ -816,10 +1087,8 @@ DBFX.Web.Controls.Map = function () {
 
         console.log("地图加载完成！");
         console.log(map.executeC,"executeC");
-
-        //设置显示比例
-        // map.setMapZoom(map.Zoom);
-        map.Zoom = map.zoom;
+        //设置地图样式
+        map.SetMapStyle(map.aMapStyle);
 
         //设置地图显示样式
         map.MapStyle = map.mapStyle;
@@ -830,16 +1099,10 @@ DBFX.Web.Controls.Map = function () {
 
         //设置工具栏插件
         map.ShowToolBar = map.showToolBar;
-
         map.ShowScale = map.showScale;
-
         map.ShowOverView = map.showOverView;
-
         map.ShowMapType = map.showMapType;
-
-
         map.ShowSatellite = map.showSatellite;
-
         map.ShowRoadNet = map.showRoadNet;
 
         //交互设置
@@ -847,9 +1110,10 @@ DBFX.Web.Controls.Map = function () {
         map.DoubleClickZoom = map.doubleClickZoom;
         map.ZoomEnable = map.zoomEnable;
 
+        //创建输入提示
+        AMap.plugin('AMap.Autocomplete', function(info){
 
-
-        AMap.plugin('AMap.Autocomplete', function(){
+            console.log(info);
             // 实例化Autocomplete
             var autoOptions = {
                 // input 为绑定输入提示功能的input的DOM ID
@@ -857,16 +1121,30 @@ DBFX.Web.Controls.Map = function () {
             }
 
             console.log("实例化Autocomplete");
-            map.autoComplete= new AMap.Autocomplete(autoOptions);
-            // 无需再手动执行search方法，autoComplete会根据传入input对应的DOM动态触发search
 
+            map.autoComplete= new AMap.Autocomplete(autoOptions);
+            console.log(map.autoComplete);
+            // 无需再手动执行search方法，autoComplete会根据传入input对应的DOM动态触发search
             map.autoComplete.on("complete",function (result) {
                 // console.log(result);
+                // map.Zoom = map.Zoom;
             });
 
             map.autoComplete.on("select",function (obj) {
                 var selectLoc = obj.poi.location;
+                console.log(obj.poi);
                 console.log(obj.poi.location);
+                //选中的搜索结果对象
+                map.SearchResult = obj.poi;
+                //TODO：20191018 添加地图搜索结果选中完成事件
+                if (map.SearchResultSelect != undefined) {
+                    if (map.SearchResultSelect.GetType != undefined && map.SearchResultSelect.GetType() == "Command") {
+                        map.SearchResultSelect.Sender = map;
+                        map.SearchResultSelect.Execute();
+                    }
+                    if (typeof (map.SearchResultSelect) == "function")
+                        map.SearchResultSelect(map.SearchResult);
+                }
 
                 map.RouteSelect.disabled = false;
                 map.RouteSelect.className = "MapRouteSelect";
@@ -886,38 +1164,61 @@ DBFX.Web.Controls.Map = function () {
                 });
                 //根据覆盖物调整地图范围  有参数时，自动适配到指定视野范围;无参数，自动自适应所有覆盖物
                 map.aMap.setFitView([map.currentMarker,map.targetMarker]);
-
             });
 
         })
 
-
         //允许用户标记位置时
-        if (map.allowMarkPos == "yes"){
+        if (map.allowMarkPos == true){
             map.userMarker = new AMap.Marker();
             // map.aMap.add(map.userMarker);
-
             map.userMarker.on("click",map.OnMarkerClick);
         }
 
         //TODO:第一次执行时 执行只需要执行一次的代码
         if(map.executeC == 1){
             console.log("执行一次的代码");
+
+
+
+            //创建点标记
+            map.CreatePointMarker();
+
+            //创建工具条等控件
+            map.CreateMapControl();
+
+            //创建定位插件
+            map.CreateGeolocation();
+
+            map.CreatePlugins();
+
+            //创建图层
+            map.CreateLayer();
+
+            //创建路径规划
+            map.CreateRoutes();
+
+            // map.Zoom = map.Zoom;
+
             //地图加载完成执行设置项
             map.aMap.setFeatures(map.Features);
 
+            if(map.SignMode){
+                map.clickListener = AMap.event.addListener(map.aMap,"click",map.OnMapClick);
+            }
 
-            //TODO：添加地图加载完成事件
+            //添加地图加载完成事件
+            console.log("添加地图加载完成事件");
             if (map.MapComplete != undefined) {
+
                 if (map.MapComplete.GetType != undefined && map.MapComplete.GetType() == "Command") {
                     map.MapComplete.Sender = map;
                     map.MapComplete.Execute();
                 }
 
                 if (typeof (map.MapComplete) == "function")
-                    map.MapComplete(e);
+                    map.MapComplete(map);
             }
-
 
             //绘制热力图
             if(map.HeatMapData && map.HeatMapData.data && map.HeatMapData.data.length>0){
@@ -948,6 +1249,10 @@ DBFX.Web.Controls.Map = function () {
 
         // console.log(map.aMap.getBounds());
         // map.aMap.setBounds(map.aMap.getBounds());
+        map.HasLoaded = true;
+        //设置显示比例
+        // map.setMapZoom(map.Zoom);
+
         console.log('completeEnd');
 
     }
@@ -957,7 +1262,7 @@ DBFX.Web.Controls.Map = function () {
     map.CreateAMap = function () {
         //创建高德地图
         map.aMap = new AMap.Map(map.MapDiv.id,{
-            // zoom:3,//级别
+            zoom:map.Zoom,//级别
             // center: [125.3247893, 43.8868593],//中心点坐标
             // viewMode:'2D'//使用3D视图
             // resizeEnable: true
@@ -972,34 +1277,59 @@ DBFX.Web.Controls.Map = function () {
         //地图加载完成
         map.aMap.on("complete", map.OnMapComplete);
 
+        map.firstZoom = true;
+        map.aMap.on("zoomstart", function (v) {
+            console.log(v);
+
+        });
+
+        map.aMap.on("zoomend", function (v) {
+            console.log(v);
+            map.firstZoom = false;
+        });
+
+        map.aMap.on("zoomchange",function (v,a,b) {
+            console.log(v);
+            console.log(a);
+            console.log(b);
+
+            if(map.aMap.getZoom()!=map.zoom && map.firstZoom){
+
+                map.Zoom = map.zoom;
+                map.aMap.setFitView();
+            }
+
+        })
+
     }
 
     //创建点标记
     map.CreatePointMarker = function () {
 
-        //创建当前位置点"标记"
-       map.currentMarker = new AMap.Marker({
-            // position: new AMap.LngLat(125.3247893, 43.8868593),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
-            // title: '长春',
-           // 设置是否可以拖拽
-           draggable: true,
-           cursor: 'move',
-           // 设置拖拽效果
-           raiseOnDrag: true
-        });
-        // map.aMap.add(map.currentMarker);
-
-        map.currentMarker.on("click",map.OnMarkerClick);
-
-        // 设置点标记的动画效果，此处为弹跳效果
-        map.currentMarker.setAnimation('AMAP_ANIMATION_DROP');
+        //允许定位当前位置
+        if(map.allowGeolocation){
+            //创建当前位置点"标记"
+            map.currentMarker = new AMap.Marker({
+                // position: new AMap.LngLat(125.3247893, 43.8868593),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+                // title: '长春',
+                // 设置是否可以拖拽
+                draggable: false,
+                cursor: 'move',
+                // 设置拖拽效果
+                raiseOnDrag: true
+            });
+            map.aMap.add(map.currentMarker);
+            map.currentMarker.on("click",map.OnMarkerClick);
+            // 设置点标记的动画效果，此处为弹跳效果
+            map.currentMarker.setAnimation('AMAP_ANIMATION_DROP');
+        }
 
 
         //构造目标点标记
         map.targetMarker = new AMap.Marker({
             offset: new AMap.Pixel(-13, -30),
             // 设置是否可以拖拽
-            draggable: true,
+            draggable: false,
             cursor: 'move',
             // 设置拖拽效果
             raiseOnDrag: true
@@ -1012,52 +1342,203 @@ DBFX.Web.Controls.Map = function () {
 
     //创建定位插件
     map.CreateGeolocation = function () {
+        if(!map.allowGeolocation){
+            return;
+        }
+
 
         //定位插件
-        AMap.plugin("Amap.Geolocation",function () {
+        map.aMap.plugin("AMap.Geolocation",function () {
             map.Geolocation = new AMap.Geolocation({
                 // 是否使用高精度定位，默认：true
                 enableHighAccuracy: true,
                 // 设置定位超时时间，默认：无穷大
-                timeout: 10000,
+                // timeout: 10000,
                 // 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
-                buttonOffset: new AMap.Pixel(10, 20),
+                // buttonOffset: new AMap.Pixel(10, 20),
+                GeoLocationFirst:true,
                 //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                zoomToAccuracy: true,
+                zoomToAccuracy: false,
                 //  定位按钮的排放位置,  RB表示右下
-                buttonPosition: 'RB'
+                // buttonPosition: 'RB',
+
+
+                enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+                maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+                convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+                showButton: true,        //显示定位按钮，默认：true
+                buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
+                buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+                showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+                panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
+                zoomToAccuracy:true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
             });
-            // map.aMap.addControl(geolocation);
-            map.Geolocation.getCurrentPosition();
 
+            //TODO:标记模式 显示定位插件
+            if(map.SignMode){
+                map.aMap.addControl(map.Geolocation);
 
-            AMap.event.addListener(map.Geolocation, 'complete', function (data) {
-                console.log("定位完成"+JSON.stringify(data["position"]));
-                //
+                //模式1、标记点始终处于地图中心，移动地图后，获取地图中心位置为标记位置，但是只能在其他事件中获取标记的位置信息；
+                // var center = map.aMap.getCenter();
+                // map.currentMarker.setPosition(center);
+                // AMap.event.addListener(map.aMap,"dragging",function (para) {
+                //     console.log(para);
+                //     var center = map.aMap.getCenter();
+                //     map.currentMarker.setPosition(center);
+                // });
 
-                map.currentMarker.setPosition(new AMap.LngLat(data.position.lng, data.position.lat));
-                map.aMap.setCenter(new AMap.LngLat(data.position.lng, data.position.lat));
-
-                map.currentMarker.label = "您所在位置";
+            //    2、点击地图时，移动标记到点击处，执行点击事件，实时获取点击的位置信息；
                 map.currentMarker.setLabel({
                     //修改label相对于maker的位置
                     offset: new AMap.Pixel(20, 20),
                     // // 设置label标签
                     // label默认蓝框白底左上角显示，样式className为：amap-marker-label
-                    content: "<div class='info'><span class='MapCurrentMarkerLabel'>您所在位置</span></div>"
+                    content: "<div class='info'><span class='MapCurrentMarkerLabel'>您标记的位置</span></div>"
                 });
 
-            });
-
-            AMap.event.addListener(map.Geolocation, 'error', function (data) {
-                console.log("定位失败"+JSON.stringify(data));
-                //TODO:定位失败需要为用户做个提醒
+            }
 
 
-            });
+            map.Geolocation.getCurrentPosition();
+
+            //定时的获取当前位置信息  默认一分钟刷新一次
+            // map.LiveLocationTimeId = setInterval(function () {
+            //     console.log("map.CreateGeolocation");
+            //     map.Geolocation.getCurrentPosition();
+            // },30000);
+
+            //监听获取位置信息完成的状态
+            AMap.event.addListener(map.Geolocation, 'complete', map.OnLiveLocation);
+            AMap.event.addListener(map.Geolocation, 'error', map.OnLiveLocation);
 
         });
     }
+
+    //设置地图样式
+    /**官方提供
+     *标准-normal；马卡龙-macaron；涂鸦-graffiti；远山黛-whitesmoke；幻影黑-dark；
+     *草色青-fresh；极夜蓝-darkblue；靛青蓝-blue；月光银-light；雅士灰-grey；
+     * 酱籽-wine；
+     * 还可以自定义地图平台
+     */
+    map.SetMapStyle = function(style){
+        map.aMap && map.aMap.setMapStyle && map.aMap.setMapStyle('amap://styles/'+style);
+    }
+
+    map.aMapStyle = "normal";
+    Object.defineProperty(map,"AMapStyle",{
+        get:function () {
+            return map.aMapStyle;
+        },
+        set:function (v) {
+            map.aMapStyle = v;
+            map.SetMapStyle(v);
+        }
+    });
+
+    //刷新当前位置信息的时间间隔
+    map.liveLocationTime = 30000;
+    Object.defineProperty(map,"LiveLocationTime",{
+        get:function () {
+            return map.liveLocationTime;
+        },
+        set:function (v) {
+            var t = v*1;
+            if(v==undefined||v==" "||isNaN(t)||t<=0){
+                map.liveLocationTime = " ";
+                setTimeout(function () {
+                    clearInterval(map.LiveLocationTimeId);
+                    map.Geolocation && map.Geolocation.getCurrentPosition();
+                },500);
+            }else {
+                map.liveLocationTime = t;
+                //延时执行 为了清除之前的定时器
+                setTimeout(function () {
+                    clearInterval(map.LiveLocationTimeId);
+                    //定时的获取当前位置信息
+                    map.LiveLocationTimeId = setInterval(function () {
+                        map.Geolocation && map.Geolocation.getCurrentPosition();
+                    },t);
+                },500);
+            }
+        }
+    });
+
+    //获取当前的位置信息 触发OnLiveLocation事件
+    map.GetCurrentPosition = function(){
+        //是否获取当前位置信息
+        if(!map.allowGeolocation){
+            return;
+        }
+
+        // map.Zoom = map.zoom;
+
+        map.LiveLocationTimeId && clearInterval(map.LiveLocationTimeId);
+        //定时的获取当前位置信息
+        if(map.liveLocationTime==""){
+            map.Geolocation && map.Geolocation.getCurrentPosition();
+        }else {
+            map.LiveLocationTimeId = setInterval(function () {
+                map.Geolocation && map.Geolocation.getCurrentPosition();
+            },map.liveLocationTime);
+        }
+    }
+
+    //实时获取当前的位置信息
+    map.CurrentPosition = {};
+    map.OnLiveLocation = function (data) {
+        //是否获取当前位置信息
+        if(!map.allowGeolocation){
+            return;
+        }
+        //20191016 记录当前的位置信息
+        // map.Zoom = map.zoom;
+        if(data.status == 0){//定位失败{"type":"error","message":"Get geolocation time out.Get ipLocation failed.","info":"FAILED","status":0}
+            // console.log("定位失败"+JSON.stringify(data));
+            //TODO:定位失败需要为用户做个提醒
+            map.CurrentPosition.status = 0;
+            map.CurrentPosition.type = data.type;
+            map.CurrentPosition.message = data.message;
+            map.CurrentPosition.info = data.info;//FAILED、NOT_SUPPORTED
+
+        }else {//定位成功
+            // console.log("定位完成"+JSON.stringify(data["position"]));
+
+            map.CurrentPosition.status = 1;
+            map.CurrentPosition.type = data.location_type;
+            map.CurrentPosition.message = data.message;
+            map.CurrentPosition.info = data.info;
+            map.CurrentPosition.lng = data.position.lng;
+            map.CurrentPosition.lat = data.position.lat;
+            map.CurrentPosition.addressComponent = data.addressComponent;
+            map.CurrentPosition.formattedAddress = data.formattedAddress;
+
+            map.currentMarker.setPosition(new AMap.LngLat(data.position.lng, data.position.lat));
+            map.aMap.setCenter(new AMap.LngLat(data.position.lng, data.position.lat));
+            // map.currentMarker.label = "您所在位置";
+            var t = "您所在位置";
+            t = map.SignMode?"您标记的位置":t;
+            map.currentMarker.setLabel({
+                //修改label相对于maker的位置
+                offset: new AMap.Pixel(20, 20),
+                // // 设置label标签
+                // label默认蓝框白底左上角显示，样式className为：amap-marker-label
+                content: "<div class='info'><span class='MapCurrentMarkerLabel'>"+t+"</span></div>"
+            });
+        }
+
+        if(map.LiveLocation != undefined && map.LiveLocation.GetType() == "Command"){
+            map.LiveLocation.Sender = map;
+            map.LiveLocation.Execute();
+        }
+
+        if(map.LiveLocation != undefined && map.LiveLocation.GetType() == "function"){
+            map.LiveLocation(map,data);
+        }
+    }
+
 
     //TODO:显示卫星图层
     map.showSatellite = false;
@@ -1184,7 +1665,6 @@ DBFX.Web.Controls.Map = function () {
     });
 
 
-
     //TODO:创建控件  工具条、比例尺、鹰眼控件、类别切换控件
     map.CreateMapControl = function () {
         //工具条、比例尺、鹰眼控件、类别切换控件  PC端选择性添加  App端不添加
@@ -1222,17 +1702,84 @@ DBFX.Web.Controls.Map = function () {
 
     }
 
-
-    //
+    //创建地图插件
     map.CreatePlugins = function () {
 
-        //TODO:创建热力图
-        map.aMap.plugin(["AMap.Heatmap"], function () {
+        //创建热力图/定位与地址、行政区查询
+        map.aMap.plugin(["AMap.Heatmap","AMap.Geocoder","AMap.DistrictSearch"], function () {
             //初始化heatmap对象
             map.heatmap = new AMap.Heatmap();
             map.aMap.add(map.heatmap);
 
+            //创建坐标与地址插件
+            map.Geocoder = new AMap.Geocoder();
+
+            //创建行政区查询
+            map.DistrictSearch  = new AMap.DistrictSearch( {
+                subdistrict: 1,   //返回下一级行政区
+                showbiz:false  //最后一级返回街道信息
+            });
+
+            // map.Zoom = map.Zoom;
         });
+
+
+    }
+
+    //搜索行政区
+    map.Polygons = [];
+    map.SearchDistrict = function(adcode,level){
+        if(!map.DistrictSearch) return;
+
+        //清除地图上Polygon覆盖物
+        for (var i = 0, l = map.Polygons.length; i < l; i++) {
+            map.Polygons[i].setMap(null);
+        }
+        if(level){
+            map.DistrictSearch && map.DistrictSearch.setLevel(level); //行政区级别
+            map.DistrictSearch && map.DistrictSearch.setExtensions('all');
+        }
+
+
+        map.DistrictSearch.search(adcode,function (status,result) {
+            if(status == 'complete'){
+                map.OnGetDistrictData(result.districtList[0]);
+            }
+        })
+    }
+
+    //获取行政区数据
+    map.OnGetDistrictData = function(data,level){
+        var bounds = data.boundaries;
+        if (bounds) {
+            for (var i = 0, l = bounds.length; i < l; i++) {
+                var polygon = new AMap.Polygon({
+                    map: map.aMap,
+                    strokeWeight: 1,
+                    strokeColor: '#0091ea',
+                    fillColor: '#80d8ff',
+                    fillOpacity: 0.2,
+                    path: bounds[i]
+                });
+                map.Polygons.push(polygon);
+            }
+            map.aMap.setFitView();//地图自适应
+        }
+
+        map.DistrictList = data.districtList;
+        // console.log(map.DistrictList);
+
+        if(map.DistrictList){
+            if(map.GetDistrictData != undefined && map.GetDistrictData.GetType() == "Command"){
+                map.GetDistrictData.Sender = map;
+                map.GetDistrictData.Execute();
+            }
+
+            if(map.GetDistrictData != undefined && map.GetDistrictData.GetType() == "function"){
+                map.GetDistrictData(map);
+            }
+        }
+
     }
 
     //带检索功能的信息窗体
@@ -1241,8 +1788,7 @@ DBFX.Web.Controls.Map = function () {
             var advancedInfo = new AMap.AdvancedInfoWindow({
                 panel:"MapInfoPanel",
                 autoMove:true,
-                placeSearch: false,
-                asDestination: false,
+                closeWhenClickMap:false,
                 offset: new AMap.Pixel(0, -30)
             });
             advancedInfo.open(map.aMap,map.aMap.getCenter());
@@ -1250,88 +1796,347 @@ DBFX.Web.Controls.Map = function () {
         });
     }
 
-    //创建路径规划
+    /******************************创建路径规划******************************************/
     map.CreateRoutes = function () {
         AMap.plugin(['AMap.Driving',
             'AMap.TruckDriving',
-            'AMap.Transfer','AMap.Walking'
+            'AMap.Transfer','AMap.Walking',"AMap.Riding","AMap.DragRoute"
         ],function () {
-            //驾车路线
+            //驾车路线规划服务，提供可带途经点的起点、终点的驾车导航路线查询功能
             map.drivingRoute = new AMap.Driving({
-                map:map.aMap
+                map:map.aMap,
+                hideMarkers:true
             });
 
-            //货车路线
+            //货车路线规划服务，提供可带途经点的起点、终点之间的货车导航路线查询功能
             map.truckRoute =new AMap.TruckDriving({
                 map:map.aMap,
-                size:2,
-                policy:3
+                size:4,//默认大型货车
+                policy:3,
+                hideMarkers:true
             });
 
-            //公交车路线
+            //公交换乘服务，提供起、终点公交路线规划服务，整合步行方式
             map.transferRoute = new AMap.Transfer({
                 map:map.aMap
             });
 
-            //步行路线
+            //步行导航服务，提供起、终点步行路线规划服务
             map.walkingRoute = new AMap.Walking({
                 map:map.aMap
             });
+
+            //骑行路径规划服务，提供起、终点骑行路线规划服务
+            map.ridingRoute = new AMap.Riding({map:map.aMap});
+
+            //拖拽导航插件
+            map.dragRoute = new AMap.DragRoute({map:map.aMap});
+
         });
     }
 
-    //TODO：绘制带经过点的货车路线
-    map.DrawTruckRoute = function (path) {
 
-        if(Array.isArray(path) && path.length > 2){
+    /***
+     * 绘制驾车路线
+     * @param points  路线上顺序经过的点{"lng":123.000,"lat":32.000}集合，起始点-经过点（）-终点
+     * @param policy    数值 驾车路线规划策略：1-最快捷模式(默认)，2-最经济模式，3-最短距离模式，4-考虑实时路况
+     * @param cb        路线规划后回调函数
+     * @constructor
+     */
+    //LngLat类  构造函数AMap.LngLat(lng:Number,lat:Number,noAutofix:bool)
+    map.drivingMarkers = [];
+    map.DrawDrivingRoute = function (points,policy,cb) {
 
-            var pathArr = new Array();
-            path.forEach(function (pos) {
-                var p = {};
-                var arr = new Array();
-                arr.push(pos.lng);
-                arr.push(pos.lat);
-                p.lnglat = arr;
-                pathArr.push(p);
-            });
-
-
-            map.truckRoute.search(pathArr,function (status,result) {
-                console.log(status);
-                console.log(result);
-            })
+        if(!(Array.isArray(points) && points.length >= 2)) return;
+        //AMap.DrivingPolicy
+        // {LEAST_TIME: 0, LEAST_FEE: 1, LEAST_DISTANCE: 2, REAL_TRAFFIC: 4}
+        var p = policy*1;
+        switch (p){
+            case 2: //2-最经济模式  AMap.DrivingPolicy.LEAST_FEE
+                map.drivingRoute.setPolicy(AMap.DrivingPolicy.LEAST_FEE);
+                break;
+            case 3: //3-最短距离模式
+                map.drivingRoute.setPolicy(AMap.DrivingPolicy.LEAST_DISTANCE);
+                break;
+            case 4: //4-考虑实时路况
+                map.drivingRoute.setPolicy(AMap.DrivingPolicy.REAL_TRAFFIC);
+                break;
+            case 1:
+            default:
+                map.drivingRoute.setPolicy(AMap.DrivingPolicy.LEAST_TIME);
+                break;
         }
+
+        var waypoints = [];
+        var origin = {};
+        var des = {};
+        points.forEach(function (p,index) {
+            var lnglat = new AMap.LngLat(p.lng,p.lat,true);
+            if(index == 0){
+                origin = lnglat;
+            }else if(index == points.length-1){
+                des = lnglat;
+            }else {
+                waypoints.push(lnglat);
+            }
+        });
+
+        //绘制标记
+        map.LoadMarkers(points,map.drivingMarkers);
+
+        //status为complete时，result为DrivingResult；当status为error时，result为错误信息info；
+        map.drivingRoute.search(origin,des,{"waypoints":waypoints},function (s,r) {
+            if(typeof cb == "function") cb(s,r);
+        });
+    }
+
+
+    /**
+     *  绘制带经过点的货车路线
+     * @param points  路线上顺序经过的点{"lng":123.000,"lat":32.000}集合
+     * @param policy  路线规划策略，1-9
+     * @param cb      路线规划后回调函数
+     * @constructor
+     */
+    map.DrawTruckRoute = function (points,policy,cb) {
+
+        if(!(Array.isArray(points) && points.length >= 2) || !map.truckRoute) return;
+        var p = policy*1;
+        p = (p>=1&&p<=9)?p:1;
+        if(map.truckRoute.setPolicy) map.truckRoute.setPolicy(p);
+
+        var pathArr = new Array();
+        points.forEach(function (pos) {
+            var p = {};
+            var arr = new Array();
+            arr.push(pos.lng);
+            arr.push(pos.lat);
+            p.lnglat = arr;
+            pathArr.push(p);
+        });
+
+
+        map.truckRoute.search(pathArr,function (status,result) {
+            if(typeof cb == "function") cb(status,result);
+        });
 
     }
 
 
-    //TODO:给定点时在地图做标记
-    map.LoadMarkers = function (points) {
-        if(map.CustomMarkers.length>0){
-            map.CustomMarkers.forEach(function (marker) {
+    //
+    map.truckRouteMarkers = [];
+    /**
+     * 绘制最短的货车路径规划路线
+     * @param points  路线上需要经过的点 第一个为起始点，其余为经过点
+     * @param cb      规划路径后的回调函数
+     * @constructor
+     */
+    map.DrawTruckShortPath = function (points,cb) {
+
+        if(!(Array.isArray(points) && points.length >= 2) || !map.truckRoute) return;
+
+        var startP = [];
+        var pathArr = new Array();
+        var otherArr = new Array();
+        points.forEach(function (pos,index) {
+            // var p = {};
+            //online为0时  不绘制在路径上
+            if(pos.online != 0 || pos.online != "0"){
+                var arr = new Array();
+                arr.push(pos.lng);
+                arr.push(pos.lat);
+                if(index==0){
+                    startP = arr;
+                }else {
+                    otherArr.push(arr);
+                }
+            }
+        });
+
+        pathArr.push(startP);
+
+        var curStart = startP;
+        var tempP = [];
+        var tempI = 0;
+
+        while (otherArr.length>0){
+            var minDis = Number.MAX_VALUE;
+            for(var i=0;i<otherArr.length;i++){
+                //计算两个点之间的直线距离
+                var dis = AMap.GeometryUtil.distance(curStart, otherArr[i]);
+                if(dis<minDis){
+                    minDis = dis;
+                    tempP = otherArr[i];
+                    tempI = i;
+                }
+            }
+
+            pathArr.push(tempP);
+            curStart = tempP;
+            otherArr.splice(tempI,1);
+        }
+
+        var pathArrs = [];
+        pathArr.forEach(function (value) {
+            var p = {};
+            p.lnglat = value;
+            pathArrs.push(p);
+        });
+
+
+        if(pathArrs.length<2) return;
+
+        //绘制路径规划  规划出行驶最短的路线
+        map.truckRoute && map.truckRoute.search(pathArrs,function (status,result) {
+            if(typeof cb == "function") cb(status,result);
+        });
+
+        map.LoadMarkers(points,map.truckRouteMarkers);
+
+    }
+
+    /**
+     * 规划公交路线
+     * @param start  起始点{"lng":123.000,"lat":32.000}或{"keyword":"北京南站"}
+     * @param des    终点 {"lng":123.000,"lat":32.000}或{"keyword":"北京西站"}
+     * @param options  参数配置 {"city":"0431"}city-String 公交换乘的城市，支持城市名称、城市区号、电话区号，此项为必填
+     * @param cb        规划路径后的回调函数
+     * @constructor
+     */
+    map.DrawTransferRoute = function (start,des,options,cb)   {
+        //没有起始点信息就不绘制
+        if(!start || !des || !options.city) return;
+        //TODO:获取当前城市编码  作为默认的公交搜索城市
+
+        var p = options.policy*1;//LEAST_FEE: 1;LEAST_TIME: 0;LEAST_TRANSFER: 2;LEAST_WALK: 3;MOST_COMFORT: 4;NO_SUBWAY: 5
+        p=(p>=0 && p<=5)?p:0;
+
+        map.transferRoute.setPolicy(p);
+        map.transferRoute.setCity(options.city);
+
+        if(start.keyword && des.keyword){
+            map.transferRoute.search([start,des],function (status,result) {
+                if(typeof cb == "function") cb(status,result);
+            });
+        }else{
+            var s = new AMap.LngLat(start.lng,start.lat,true);
+            var d = new AMap.LngLat(des.lng,des.lat,true);
+            map.transferRoute.search(s,d,function (status,result) {
+                if(typeof cb == "function") cb(status,result);
+            });
+        }
+    }
+
+
+    /**
+     * 规划骑行路线
+     * @param start  起始点{"lng":123.000,"lat":32.000}或{"keyword":"北京南站"}
+     * @param des    终点 {"lng":123.000,"lat":32.000}或{"keyword":"北京西站"}
+     * @param cb
+     * @constructor
+     */
+    map.DrawRidingRoute = function(start,des,cb){
+        //没有起始点信息就不绘制
+        if(!(start && des)) return;
+        if(start.keyword && des.keyword){
+            map.ridingRoute && map.ridingRoute.search([start,des],function (status,result) {
+                if(typeof cb == "function") cb(status,result);
+            });
+        }else{
+            var s = new AMap.LngLat(start.lng,start.lat,true);
+            var d = new AMap.LngLat(des.lng,des.lat,true);
+            map.ridingRoute && map.ridingRoute.search(s,d,function (status,result) {
+                if(typeof cb == "function") cb(status,result);
+            });
+        }
+    }
+
+
+    /**
+     * 规划步行路线
+     * @param start  起始点{"lng":123.000,"lat":32.000}或{"keyword":"北京南站"}
+     * @param des    终点 {"lng":123.000,"lat":32.000}或{"keyword":"北京西站"}
+     * @param cb 回调函数
+     */
+    map.DrawWalkingRoute = function(start,des,cb){
+        //没有起始点信息就不绘制
+        if(!(start && des)) return;
+        if(start.keyword && des.keyword){
+            map.walkingRoute && map.walkingRoute.search([start,des],function (status,result) {
+                if(typeof cb == "function") cb(status,result);
+            });
+        }else{
+            var s = new AMap.LngLat(start.lng,start.lat,true);
+            var d = new AMap.LngLat(des.lng,des.lat,true);
+            map.walkingRoute && map.walkingRoute.search(s,d,function (status,result) {
+                if(typeof cb == "function") cb(status,result);
+            });
+        }
+    }
+
+
+    //20191018-实现搜索地点的方法
+    map.SearchPlace = function(kw){
+        if(typeof kw != "string") return;
+        map.MapSearchInput.value = kw;
+        map.autoComplete && map.autoComplete.search(kw,function (status,result) {
+            switch (status) {
+                case "complete":
+                    map.SearchResults = result["tips"];
+                    if(!map.ShowTools){
+                        map.autoComplete.closeResult();
+                    }
+                    break;
+                case "error":
+                case "no_data":
+                default:
+                    map.SearchResults = [];
+                    break;
+            }
+            map.OnPlaceSearchCompleted();
+        });
+    }
+
+    //给定点时在地图做标记
+    map.LoadMarkers = function (points,markersArr) {
+        if(!AMap) return;
+
+        var tempArr = [];
+        if(markersArr != undefined){
+            tempArr = markersArr;
+        }else {
+            tempArr = map.CustomMarkers;
+        }
+
+        if(tempArr.length>0){
+            tempArr.forEach(function (marker) {
                 map.aMap.remove(marker);
             })
         }
 
-        map.CustomMarkers = [];
+        //数组保存自定义的点标记
+        tempArr.length = 0;
         if(Array.isArray(points)){
             for(var i = 0;i<points.length;i++){
                 var item = points[i];
 
-                var cMarker = new AMap.Marker();
+                var cMarker =new AMap.Marker();
+
 
                 //设置点标记上下文
+                cMarker.DataContext = item;
                 cMarker.dataContext = item;
 
                 //TODO:监听点击事件
                 cMarker.on("click",map.OnMarkerClick);
 
+                var t = item.title || "",l = item.label || "",c = item.c || "#616465",bgc = item.bgc || "transparent",w=item.w||24,h=item.h||24;
+
                 cMarker.setPosition(new AMap.LngLat(item.lng, item.lat));
-                if(item.title){
-                    cMarker.setTitle(item.title);
-                }
+                cMarker.setTitle(t);//鼠标悬停时显示的文字
+
                  if(item.label){
-                    var content = "<div class='info'>"+item.label+"</div>";
+                    var content = "<div class='info' style='background-color: "+bgc+";color: "+c+"'>"+item.label+"</div>";
                     cMarker.label = item.label;
                     cMarker.setLabel({
                         //修改label相对于maker的位置
@@ -1340,24 +2145,37 @@ DBFX.Web.Controls.Map = function () {
                     });
                  }
 
+                if(item.icon){
+                    var icon = new AMap.Icon({
+                        size:new AMap.Size(w,h),
+                        image:item.icon,
+                        imageSize:new AMap.Size(w,h)
+                    });
+                    cMarker.setIcon(icon);
+                }
+
                 cMarker.setAnimation("AMAP_ANIMATION_DROP");
-                map.aMap.add(cMarker);
-                map.CustomMarkers.push(cMarker);
+                map.aMap && map.aMap.add && map.aMap.add(cMarker);
+                tempArr.push(cMarker);
             }
         }
+
         //地图缩放至显示标记点
-        map.aMap.setFitView(map.CustomMarkers);
+        map.aMap && map.aMap.setFitView && map.aMap.setFitView(tempArr);
 
     }
+
 
     //点击的标记的信息
     map.ClickedMarkerData = {};
 
-    map.OnMarkerClick = function () {
+    map.OnMarkerClick = function (e) {
         console.log("点标记点击了");
 
+        map.ClickedMarker = this;
+
         var title = this.getTitle();
-        var label = this.getLabel();
+        var label = this.label || this.getLabel();
         var lng = this.getPosition().getLng();
         var lat = this.getPosition().getLat();
 
@@ -1392,28 +2210,43 @@ DBFX.Web.Controls.Map = function () {
         //创建AMap
         map.CreateAMap();
 
-        //创建点标记
-        map.CreatePointMarker();
+        //TODO:以下方法在地图创建完成后调用?-20201020
+        // //创建点标记
+        // map.CreatePointMarker();
+        //
+        // //创建工具条等控件
+        // map.CreateMapControl();
+        //
+        // //创建定位插件
+        // map.CreateGeolocation();
+        //
+        // map.CreatePlugins();
+        //
+        // //创建图层
+        // map.CreateLayer();
+        //
+        // //创建路径规划
+        // map.CreateRoutes();
+        //
+        // map.Zoom = map.Zoom;
 
-        //创建工具条等控件
-        map.CreateMapControl();
-
-        //创建定位插件
-        map.CreateGeolocation();
-
-        map.CreatePlugins();
-
-        //创建图层
-        map.CreateLayer();
-
-        //创建路径规划
-        map.CreateRoutes();
-        
     }
 
 
     map.OnLoad = function () {
         // map.LoadMap();
+    }
+
+    //20191016-实现控件UnLoad方法 在界面卸载时会被调用 清除定时器
+    map.UnLoad = function () {
+        clearInterval(map.LiveLocationTimeId);
+        map.HasLoaded = false;
+        map.aMap && map.aMap.destroy && map.aMap.destroy();
+        var rs = document.getElementsByClassName("amap-sug-result");
+        if(!rs.length)return;
+        for(var i=0;i<rs.length;i++){
+            rs[i].style.visibility = "hidden";
+        }
     }
 
     map.OnCreateHandle();
@@ -1443,12 +2276,21 @@ DBFX.Serializer.MapSerializer = function () {
         DBFX.Serializer.SerialProperty("ShowRoadNet", c.ShowRoadNet, xe);
         DBFX.Serializer.SerialProperty("ShowSatellite", c.ShowSatellite, xe);
         DBFX.Serializer.SerialProperty("MapStyle", c.MapStyle, xe);
+        DBFX.Serializer.SerialProperty("AMapStyle", c.AMapStyle, xe);
+        DBFX.Serializer.SerialProperty("LiveLocationTime", c.LiveLocationTime, xe);
+        DBFX.Serializer.SerialProperty("AllowGeolocation", c.AllowGeolocation, xe);
+        DBFX.Serializer.SerialProperty("AllowMarkPos", c.AllowMarkPos, xe);
+        DBFX.Serializer.SerialProperty("SignMode", c.SignMode, xe);
 
         //序列化方法
         DBFX.Serializer.SerializeCommand("MapComplete", c.MapComplete, xe);
         DBFX.Serializer.SerializeCommand("MarkedPosition", c.MarkedPosition, xe);
         DBFX.Serializer.SerializeCommand("MarkerClick", c.MarkerClick, xe);
         DBFX.Serializer.SerializeCommand("POIListItemClick", c.POIListItemClick, xe);
+        DBFX.Serializer.SerializeCommand("LiveLocation", c.LiveLocation, xe);
+        DBFX.Serializer.SerializeCommand("PlaceSearchCompleted", c.PlaceSearchCompleted, xe);
+        DBFX.Serializer.SerializeCommand("SearchResultSelect", c.SearchResultSelect, xe);
+        DBFX.Serializer.SerializeCommand("GetDistrictData", c.GetDistrictData, xe);
 
     }
 
@@ -1473,12 +2315,21 @@ DBFX.Serializer.MapSerializer = function () {
         DBFX.Serializer.DeSerialProperty("ShowRoadNet", c, xe);
         DBFX.Serializer.DeSerialProperty("ShowSatellite", c, xe);
         DBFX.Serializer.DeSerialProperty("MapStyle", c, xe);
+        DBFX.Serializer.DeSerialProperty("AMapStyle", c, xe);
+        DBFX.Serializer.DeSerialProperty("LiveLocationTime", c, xe);
+        DBFX.Serializer.DeSerialProperty("AllowGeolocation", c, xe);
+        DBFX.Serializer.DeSerialProperty("AllowMarkPos", c, xe);
+        DBFX.Serializer.DeSerialProperty("SignMode", c, xe);
 
         //对方法反序列化
         DBFX.Serializer.DeSerializeCommand("MapComplete", xe, c);
         DBFX.Serializer.DeSerializeCommand("MarkedPosition", xe, c);
         DBFX.Serializer.DeSerializeCommand("MarkerClick", xe, c);
         DBFX.Serializer.DeSerializeCommand("POIListItemClick", xe, c);
+        DBFX.Serializer.DeSerializeCommand("LiveLocation", xe, c);
+        DBFX.Serializer.DeSerializeCommand("PlaceSearchCompleted", xe, c);
+        DBFX.Serializer.DeSerializeCommand("SearchResultSelect", xe, c);
+        DBFX.Serializer.DeSerializeCommand("GetDistrictData", xe, c);
 
     }
 }
@@ -1494,7 +2345,12 @@ DBFX.Design.ControlDesigners.MapDesigner = function () {
             od.EventListBox.ItemSource = [{EventName:"MapComplete",EventCode:undefined,Command:od.dataContext.MapComplete,Control:od.dataContext},
                                             {EventName:"MarkedPosition",EventCode:undefined,Command:od.dataContext.MarkedPosition,Control:od.dataContext},
                                             {EventName:"MarkerClick",EventCode:undefined,Command:od.dataContext.MarkerClick,Control:od.dataContext},
-                                            {EventName:"POIListItemClick",EventCode:undefined,Command:od.dataContext.POIListItemClick,Control:od.dataContext}];
+                                            {EventName:"POIListItemClick",EventCode:undefined,Command:od.dataContext.POIListItemClick,Control:od.dataContext},
+                                            {EventName:"LiveLocation",EventCode:undefined,Command:od.dataContext.LiveLocation,Control:od.dataContext},
+                                            {EventName:"PlaceSearchCompleted",EventCode:undefined,Command:od.dataContext.PlaceSearchCompleted,Control:od.dataContext},
+                                            {EventName:"SearchResultSelect",EventCode:undefined,Command:od.dataContext.SearchResultSelect,Control:od.dataContext},
+                                            {EventName:"GetDistrictData",EventCode:undefined,Command:od.dataContext.GetDistrictData,Control:od.dataContext}];
+
         }, obdc);
     }
 
@@ -1505,7 +2361,11 @@ DBFX.Design.ControlDesigners.MapDesigner = function () {
             obdc.EventListBox.ItemSource = [{EventName:"MapComplete",EventCode:undefined,Command:obdc.dataContext.MapComplete,Control:obdc.dataContext},
                                             {EventName:"MarkedPosition",EventCode:undefined,Command:obdc.dataContext.MarkedPosition,Control:obdc.dataContext},
                                             {EventName:"MarkerClick",EventCode:undefined,Command:obdc.dataContext.MarkerClick,Control:obdc.dataContext},
-                                            {EventName:"POIListItemClick",EventCode:undefined,Command:obdc.dataContext.POIListItemClick,Control:obdc.dataContext}];
+                                            {EventName:"POIListItemClick",EventCode:undefined,Command:obdc.dataContext.POIListItemClick,Control:obdc.dataContext},
+                                            {EventName:"LiveLocation",EventCode:undefined,Command:obdc.dataContext.LiveLocation,Control:obdc.dataContext},
+                                            {EventName:"PlaceSearchCompleted",EventCode:undefined,Command:obdc.dataContext.PlaceSearchCompleted,Control:obdc.dataContext},
+                                            {EventName:"SearchResultSelect",EventCode:undefined,Command:obdc.dataContext.SearchResultSelect,Control:obdc.dataContext},
+                                            {EventName:"GetDistrictData",EventCode:undefined,Command:obdc.dataContext.GetDistrictData,Control:obdc.dataContext}];
         }
     }
 

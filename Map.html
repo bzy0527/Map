@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Map</title>
-
+    <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=5.0, minimun-scale=1.0">
     <link rel="stylesheet" href="Map.css">
     <style>
        html,body{
@@ -11,6 +11,11 @@
             height: 100%;
         }
 
+        #container{
+            background-color: #b7babb;
+            width: 300px;
+            height: 400px;
+        }
 
     </style>
     <!--加载高德地图-->
@@ -41,15 +46,21 @@
 
     <!--<script src="https://api.map.baidu.com/api?v=2.0&ak=oXec3eMiIws1586v9MuGfr7GuTTVtmPB" type="text/javascript"></script>-->
 
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
     <script src="Map.js"></script>
 
 </head>
 <body>
-<div id="div" style="height:80%;width: 100%;border: 1px solid #ffaa30"></div>
-<div id="btn" style="height:40px;width: 100px;border: 1px solid #ffaa30">btn</div>
-<div id="btn01" style="height:40px;width: 100px;border: 1px solid #6786ff">搜索附近兴趣点</div>
-<div id="btn02" style="height:40px;width: 100px;border: 1px solid #ffd2bc">设置地图显示中心</div>
-<div id="btn03" style="height:40px;width: 100px;border: 1px solid #ffd2bc">热力图</div>
+<div id="div" style="height:80%;width: 100%;border: 1px solid #ffaa30;display: inline-block;"></div>
+<div id="btn" style="height:40px;width: 100px;border: 1px solid #ffaa30;display: inline-block;">btn</div>
+<div id="btn01" style="height:40px;width: 100px;border: 1px solid #6786ff;display: inline-block;">搜索附近兴趣点</div>
+<div id="btn02" style="height:40px;width: 100px;border: 1px solid #ffd2bc;display: inline-block;">设置地图显示中心</div>
+<div id="btn03" style="height:40px;width: 100px;border: 1px solid #ffd2bc;display: inline-block;">热力图</div>
+<button onclick="LoadGeoJSON()">加载GEOJSON</button>
+<button onclick="DrawDisProvince()">绘制省区图层</button>
+<button onclick="getZoom()">获取地图Zoom</button>
+<button onclick="getCurrentPos()">当前位置</button>
+<div id="container"></div>
 <input type="text" tabindex="1">
 <input type="text" tabindex="2">
 <input type="text" tabindex="3">
@@ -60,26 +71,35 @@
     var divE = document.getElementById("div");
     var map1 = new DBFX.Web.Controls.Map();
     divE.appendChild(map1.VisualElement);
-    map1.Width = "1000px";
-    map1.Height = "800px";
+    map1.Width = "100%";
+    map1.Height = "100%";
 
-    map1.ShoTools = true;
+    map1.AllowMarkPos = true;
+
     map1.ShowLogo = false;
     // map1.ShowCR = false;
-    // map1.Zoom = 11;
-    map1.ShowScale = true;
+
     // map1.ShowToolBar = false;
-    map1.ShowToolBar = true;
+
     map1.ShowToolBar = false;
     map1.ShowScale = false;
-    map1.ShowScale = true;
-    map1.ShowScale = true;
-    map1.ShowScale = true;
-    map1.ShowScale = false;
-    // map1.ShowOverView = true;
+    // map1.ShowTools = true;
+
     // map1.ShowMapType = true;
 
+    map1.Zoom = 16;
+    //是否获取当前位置信息
+    map1.AllowGeolocation = true;
+    map1.SignMode = true;
+    map1.ShowSearchBarOnly = true;
 
+    function getCurrentPos() {
+        map1.Geolocation.getCurrentPosition();
+    }
+
+    function getZoom(){
+        console.log(map1.aMap.getZoom());
+    }
 
     setTimeout(function () {
 
@@ -94,10 +114,13 @@
         // map1.SwitchCountry("RUS");
 
         // map1.Zoom = 4;
+        map1.LiveLocationTime = -1;
+        // map1.aMap.setMapStyle('amap://styles/grey');
 
-    },1000);
 
-    map1.MapStyle = "DisProvince";
+    },4000);
+
+    // map1.MapStyle = "DisProvince";
 
     var dataSet = {
         options:{
@@ -160,38 +183,105 @@
             "count": 21
         }],
         max: 20             //最大值
-    }
-    map1.HeatMapData = dataSet;
+    };
+    // map1.HeatMapData = dataSet;
 
 
+    var pos1 = {"lng":125.292078,lat:43.828768,title:"吉林省长春市",label:"吉林省长春市",w:40,h:30,c:"#666",bgc:"red",icon:"https://wfs.dbazure.cn/root//OwnerProfiles/111/3b5a0533153c4a0fa5f0a35305123423/aa4abf5f79c04e18afc1600054b393e6.png"};
+    var pos2 = {lng:125.293237,lat:43.829929,title:"林园小区",online:0,label:"林园小区"};
+    var pos3 = {lng:125.297002,lat:43.836182,title:"大禹城邦",online:0,label:"大禹城邦",c:"#666",bgc:"red",icon:"https://lc.dbazure.cn/root//OwnerProfiles/co_id/3b5a0533153c4a0fa5f0a35305123423/a8fffa56312f46f59a10934002fe2016.png"};
+    var pos4 = {lng:125.319533,lat:43.858404,title:"长春应用化学研究所长春应用化学研究所",online:"0",label:"长春应用化学研究所长春应用化学研究所"};
+    var pos5 = {lng:125.319233,lat:43.87638,title:"起始点",label:"Moko Shop"};
 
-
-
-    var pos1 = {lng:125.292078,lat:43.828768,title:"biaoqian1",label:"吉林省长春市"};
-    var pos2 = {lng:125.293237,lat:43.829929};
-    var pos3 = {lng:125.297002,lat:43.836182};
-    var pos4 = {lng:125.319533,lat:43.858404};
-    var pos5 = {lng:125.319233,lat:43.87638};
 
     var arr = new Array();
-    arr.push(pos1,pos2,pos3,pos4,pos5);
+    arr.push(pos1,pos5,pos2,pos3,pos4);
     // map1.DrawTruckRoute(arr);
+
+    //绘制省区图层
+    function DrawDisProvince() {
+        map1.DrawDisProvince({
+            adcode:"220100",
+            depth:3
+        });
+    }
+
+    //加载GeoJson
+    function LoadGeoJSON() {
+
+        map1.LoadGeoJson('https://lc.dbazure.cn/maps/jilin/baicheng/daan.json',function (err) {
+            console.log(err);
+        });
+
+        // ajax('./daan.json',function (err, geoJSON) {
+        //     if (!err) {
+        //         var geojson = new AMap.GeoJSON({
+        //             geoJSON: geoJSON,
+        //             // 还可以自定义getMarker和getPolyline
+        //             getPolygon: function (geojson, lnglats) {
+        //                 // 计算面积
+        //                 var area = AMap.GeometryUtil.ringArea(lnglats[0]);
+        //
+        //                 return new AMap.Polygon({
+        //                     path: lnglats,
+        //                     fillOpacity: 1 - Math.sqrt(area / 8000000000),// 面积越大透明度越高
+        //                     strokeColor: 'white',
+        //                     fillColor: '#a4edba'
+        //                 });
+        //             }
+        //         });
+        //         map1.aMap.clearMap();
+        //         geojson.setMap(map1.aMap);
+        //         map1.aMap.setFitView();
+        //         log.success('GeoJSON 数据加载完成')
+        //     }else {
+        //
+        //     }
+        //
+        // });
+    }
+
 
     var btn = document.getElementById("btn");
     btn.onclick = function (ev) {
-        // map1.DrawTruckRoute(arr);
-        map1.LoadMarkers(arr);
+        // map1.DrawTruckShortPath(arr);
+
+        // map1.DrawDrivingRoute([pos2,pos5],2);
+        // map1.DrawDrivingRoute([pos3,pos4],2);
+
+        // map1.DrawTransferRoute(pos1,pos5,{"city":"0431"});
+        map1.DrawWalkingRoute(pos1,pos5);
+
+        // map1.LoadMarkers(arr);
+
+
+        // map1.CreateAdvancedInfoWindow();
+
+        // map1.SearchDistrict("长春","city");
     }
 
 
 
     var btn01 = document.getElementById("btn01");
     btn01.onclick = function (ev) {
+        // map1.MapSearchInput.focus();
+
+        map1.ShowTools = false;
+        map1.ShowSearchBarOnly = true;
+        map1.SearchPlace("吉林省长春市人民广场");
+
+        setTimeout(function () {
+            console.log("dfasdfasdf");
+            map1.MapSearchInput.blur();
+        },3000);
+        // map1.MapSearchInput.focus();
+        // map1.MapSearchInput.blur();
+
          var config = {
                 //兴趣点类型 多个用|分隔
                 type:"餐饮|酒店|电影院",
                 //每页显示数据数
-                pageSize:5,
+                pageSize:20,
                 //默认显示页数
                 pageIndex:1,
                 //兴趣点城市码
@@ -201,15 +291,24 @@
                 //LngLat-中心点坐标
                 cpoint:[116.405467, 39.907761],
                 //搜索半径 取值范围0-50000
-                radius:2000
+                radius:2000,
+                panel:container
             }
-        map1.PlaceSearchNearBy(config);
+        // map1.PlaceSearchNearBy(config,"吉林省长春市人民广场");
     }
 
 
     var btn02 = document.getElementById("btn02");
     btn02.onclick = function (ev) {
-        map1.setMapCenter([116.405467, 39.907761]);
+        var rs = document.getElementsByClassName("amap-sug-result");
+        console.log(rs[0]);
+        for(var i=0;i<rs.length;i++){
+            rs[i].style.visibility = "hidden";
+        }
+
+
+
+        // map1.setMapCenter([116.405467, 39.907761]);
     }
 
 
@@ -273,40 +372,71 @@
         map1.HeatMap(dataSet);
     }
 
+
     // var map2 = new DBFX.Web.Controls.Map();
     // divE.appendChild(map2.VisualElement);
     // map.OnLoad();
     // map.LoadMap();
 
 
+    var json =
+        {
+            "employees":[
+                {"firstName":"Bill", "lastName":"Gates"},
+                {"firstName":"Steve", "lastName":"Jobs"},
+                {"firstName":"Alan", "lastName":"Turing"}
+            ]
+        }
 
-    Msg = {
-        m:0,            //消息模式  0--不需要显示到设备的本地消息 1—需要显示到设备的本地消息
-        f:0,            //提醒方式 0—无声音、无震动、无闪光 1—声音 2—震动 3—闪光灯 4—声音震动 5—声音、震动、闪光
-        title:"消息标题",  //消息标题 消息模式m=1时是必填项目，否则可以不设置此属性
-        body:"消息内容",  //消息内容 消息模式m=1时必填，否则可以不设置此属性
-        badge:0,        //消息标识 用于显示在应用图标右上角的标记数量
-        appid:"",       //应用标识d 向某一应用程序推送消息
-        msgid:"",       //消息类型编号 客户端可监听某一类型的消息并处理
-        ud:{}           //此属性为用户自定义的其它数据，开发者可根据需要定义一些内容
+        var a = new Date();
+
+//PlaceSearchNearBy
+    var resultObj = {
+                        id: "B01AF06DSA",
+                        name: "长春海航名门酒店",
+                        location: {P: 43.868656, R: 125.32438200000001, lng: 125.324382, lat: 43.868656},
+                        address: "人民大街4501号,近人民广场",
+                        adcode: "220104",
+
+                        type: "住宿服务;宾馆酒店;宾馆酒店|餐饮服务;餐饮相关场所;餐饮相关",
+
+
+                        tel: "0431-85565666;0431-80579999",
+                        distance: NaN,
+                        shopinfo: "0",
+                        website: "www.hnahotel.com",
+                        pcode: "220000",
+                        citycode: "0431",
+                        postcode: "130021",
+                        pname: "吉林省",
+                        cityname: "长春市",
+                        adname: "朝阳区",
+                        email: "",
+                        photos: [{}, {}, {}],
+                        entr_location: {P: 43.868731, R: 125.32447100000002, lng: 125.324471, lat: 43.868731},
+                        exit_location: null,
+                        groupbuy: false,
+                        discount: false,
+                        indoor_map: false,
+                    };
+
+    //
+    var resultObj01 = {
+        id: "B01AF00026",
+        name: "人民广场",
+        location: {P: 43.886907, R: 125.3247, lng: 125.3247, lat: 43.886907},
+        address: "人民大街中段",
+        adcode: "220104",
+
+        district: "吉林省长春市朝阳区",
+        typecode: "110105",
+        city: []
     }
-
-    var a = [1,5,1,3,4,1,2,4,2,4,1,5,7,6];
-
-    var r = a.filter(function (e,i,self) {
-        return self.indexOf(e)===i;
-    });
-
-    var aee = new Array();
-    aee.indexOf("a");
-    // var arr = [];
-    // arr.push(23,45);
-    // console.log(arr);
-
-    console.log(JSON.stringify({"count":"1.6666"*1}));
-    console.log(JSON.stringify(JSON.stringify({"count":"1.6666"*1})));
-
-
+    // var ee = "   hello   ";
+    //
+    // var ff = "ee.trim() != \"\" ";
+    // var gg = eval(ff);
+    // console.log(gg);
 </script>
 
 </body>
