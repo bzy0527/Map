@@ -84,14 +84,12 @@
     map1.ShowToolBar = false;
     map1.ShowScale = false;
     // map1.ShowTools = true;
-
     // map1.ShowMapType = true;
-
-    map1.Zoom = 16;
+    map1.Zoom = 10;
     //是否获取当前位置信息
     map1.AllowGeolocation = true;
-    map1.SignMode = true;
-    map1.ShowSearchBarOnly = true;
+    // map1.SignMode = true;
+    // map1.ShowSearchBarOnly = true;
 
     function getCurrentPos() {
         map1.Geolocation.getCurrentPosition();
@@ -204,6 +202,15 @@
             adcode:"220100",
             depth:3
         });
+    }
+
+
+    map1.MapComplete = function (map) {
+        console.log("=====MapComplete=====");
+        // map1.LoadMarkers([{lng:116.20,lat:39.56}]);
+        // map1.DrawTransferRoute(pos1,pos5,{"city":"0431"});
+
+        // LoadGeoJSON();
     }
 
     //加载GeoJson

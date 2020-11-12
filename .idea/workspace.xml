@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b206b9-cbf6-496c-aa20-36d1c6145479" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/testmap.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.css" beforeDir="false" afterPath="$PROJECT_DIR$/Map.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.html" beforeDir="false" afterPath="$PROJECT_DIR$/Map.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.js" beforeDir="false" afterPath="$PROJECT_DIR$/Map.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MapDesigner.scrp" beforeDir="false" afterPath="$PROJECT_DIR$/MapDesigner.scrp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,7 +34,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../HChart" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
   </component>
@@ -138,7 +134,10 @@
       <workItem from="1603255716910" duration="995000" />
       <workItem from="1603680420433" duration="7848000" />
       <workItem from="1604273774060" duration="13442000" />
-      <workItem from="1604551407937" duration="8294000" />
+      <workItem from="1604551407937" duration="9519000" />
+      <workItem from="1604629744345" duration="8000" />
+      <workItem from="1604632520963" duration="708000" />
+      <workItem from="1605082724671" duration="6483000" />
     </task>
     <servers />
   </component>

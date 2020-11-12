@@ -201,14 +201,16 @@ DBFX.Web.Controls.Map = function () {
         map.aMap.getCity(function (result) {
 
             console.log("为Autocomplete设置城市代码");
-            // console.log(result);
-            // map.Zoom = map.zoom;
+
             map.City = result;
 
             map.autoComplete && map.autoComplete.setCity(result.citycode);
             map.transferRoute && map.transferRoute.setCity(result.citycode);
-            map.aMap.setCity(result.citycode);
-            // map.Zoom = map.zoom;
+            //设置地图的显示中心 在地图绘制完成事件之后执行，
+            // map.aMap.setCity(result.citycode);
+            //
+            map.aMap.setFitView(map.MarkersArray);
+            map.Zoom = map.zoom;
         });
         map.currentMarker && map.aMap.add(map.currentMarker);
     }
@@ -1245,7 +1247,6 @@ DBFX.Web.Controls.Map = function () {
         }
 
 
-        // map.aMap.setFitView();
 
         // console.log(map.aMap.getBounds());
         // map.aMap.setBounds(map.aMap.getBounds());
@@ -1288,14 +1289,19 @@ DBFX.Web.Controls.Map = function () {
             map.firstZoom = false;
         });
 
-        map.aMap.on("zoomchange",function (v,a,b) {
+        map.aMap.on("zoomchange",function (v) {
             console.log(v);
-            console.log(a);
-            console.log(b);
 
             if(map.aMap.getZoom()!=map.zoom && map.firstZoom){
 
                 map.Zoom = map.zoom;
+                /**
+                 * 返回添加的覆盖物对象，可选类型包括marker、circle、polyline、polygon； Type可缺省，
+                 * 缺省时返回所有覆盖物（marker、circle、polyline、polygon）。
+                 * 返回结果不包含官方覆盖物等，比如定位marker，周边搜索圆等
+                 */
+                // var markers = map.aMap.getAllOverlays("marker");
+                console.log(map.MarkersArray);
                 map.aMap.setFitView();
             }
 
@@ -2162,7 +2168,7 @@ DBFX.Web.Controls.Map = function () {
 
         //地图缩放至显示标记点
         map.aMap && map.aMap.setFitView && map.aMap.setFitView(tempArr);
-
+        map.MarkersArray = tempArr;
     }
 
 
